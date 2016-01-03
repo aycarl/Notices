@@ -23,7 +23,7 @@ module.exports = function(passport){
     router.post('/signup', passport.authenticate('signup', {
         successRedirect: '/auth/success',
         failureRedirect: '/auth/failure'
-    }));
+    })); 
 
     //log out
     router.get('/signout', function(req, res) {

@@ -8,43 +8,13 @@
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script> -->
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <style type="text/css">
-         @keyframes newEntry {
-         from{color:white;}
-         to{color:red;}
-         }
-
-         .sky {
-        color:white;
-        background-color:lightblue;
-        padding:20px;
-        font-family:"Courier New";
-        }
-
-        .earth {
-        color:white;
-        background-color:#FF6600;
-        padding:20px;
-        font-family:"Courier New";
-        }
-
-        .neww{
-            color:white;
-            animation:newEntry 4s infinite;
-
-        }
-
-        </style>
         <script type="text/javascript">
-        $(document).ready(function(){
-          $('#newIcon').hide();
+            // $(document).ready(function(){
+            //   $('#newIcon').hide();
 
-
-
-
-        })
+            // })
         </script>
     </head>
     <body ng-app="noticesApp">
@@ -72,7 +42,7 @@
                         <div class="notice well" ng-repeat="notice in notices | orderBy:'created_at':true" ng-class-odd="'earth'" ng-class-even="'sky'">
                          <div class="row">
                             <h1 style="font-size:26px;">{{notice.text}}</h1>
-                            <span id="newIcon"><i  class="material-icons neww">new_releases</i><i class="material-icons">not_interested</i> <i class="material-icons">stars</i> <i class="material-icons">visibility</i></span>
+                            <!-- <span id="newIcon"><i  class="material-icons neww">new_releases</i><i class="material-icons">not_interested</i> <i class="material-icons">stars</i> <i class="material-icons">visibility</i></span> -->
                         </div>
                         <div class="row">
                             <small>Posted by @{{notice.created_by}}</small>

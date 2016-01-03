@@ -1,21 +1,35 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var bCrypt = require('bcrypt-nodejs');
-//temporary data store
-var users = {};
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Post = mongoose.model('Post');
+
+
 module.exports = function(passport){
 
     // Passport needs to be able to serialize and deserialize users to support persistent login sessions
     passport.serializeUser(function(user, done) {
         
-        //tell passport which id to use for the user
         console.log('serializing user:',user.username);
-        return done(null, user.username);
+        //return the unique db id for the user
+        return done(null, user._id);
     });
 
-    passport.deserializeUser(function(username, done) {
 
-        //return the user object back
-        return done(null, users[username]);
+    passport.deserializeUser(function(id, done) {
+
+        User.findById(id, function(err, user){
+
+            if (err) {
+                return done(err, false);
+            }
+
+            if (!user){
+                return done('user not found', false);
+            }
+            // we found the user object, return
+            return done(user, true);
+        });
 
     });
 
@@ -24,17 +38,28 @@ module.exports = function(passport){
         },
         function(req, username, password, done) {
             //check if user exists
-            if(!users[username]){
-                return done('user not found', false);
-            }
-            //check if password it correct
-            if(!isValidPassword(users[username], password)){
-                return done('invalid password', false);
-            }
-            //succesfully signed in
-            console.log('succesfully signed in');
-            return done(null, users[username]);
+            User.findOne({'username': username}, function(err, user){
+
+                if (err) {
+                    return done(err, false);
+                }
+
+                //if there is no user with this username
+                if (!user){
+                    return done('user' + username + ' not found', false);
+                }
+
+                if (!isValidPassword(user, password)) {
+                    //wrong password
+                    console.log('incorrect password');
+                    return done('incorrect password', false);
+                }
+
+                return done(null, user);
+            });
+
         }
+
     ));
 
     passport.use('signup', new LocalStrategy({
@@ -42,20 +67,36 @@ module.exports = function(passport){
         },
         function(req, username, password, done) {
 
-            //check if the user already exists
-            if(users[username]){
-                return done('username already taken', false);
-            }
+            User.findOne({'username': username}, function(err, user){
 
-            //add user to db
-            users[username] = {
+                if(err){
+                    console.log('Error in signup: '+ err);
+                    return done(err, false);
+                }
 
-                username: username,
-                password: createHash(password)
+                if(user){
+                    console.log('username ' + username + ' already taken');
+                    //we have already signed this user us
+                    return done('username already taken', false);
+                }
 
-            };
+                //create a new user
+                var user = new User();
 
-            return done(null, users[username]);
+                user.username = username;
+                user.password = createHash(password);
+
+                user.save(function(err, user){
+
+                    if(err){
+                        return done(err, false);
+                    }
+                    console.log('Registration successful' + username);
+
+                    return done(null, user);
+                });
+
+            });
 
         })
     );

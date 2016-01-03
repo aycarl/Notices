@@ -14,3 +14,4 @@ var postSchema = new mongoose.Schema({
 
 //declare a model called User which has Schema userSchema
 mongoose.model("User", userSchema);
+mongoose.model("Post", postSchema);

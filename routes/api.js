@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+var Post = mongoose.model('Post');
+
 
 router.use(function(req, res, next){
 
@@ -18,41 +21,78 @@ router.use(function(req, res, next){
 
 });
 
+//api for all notices
 router.route('/notices')
 
 	//returns all notices
 	.get(function(req, res){
 
-		//temporary solution
+		Post.find(function(err, data){
+			if(err){
+				return res.send(500, err);
+			}
+			return res.send(data);
+		});
 
-		res.send({message: 'TODO return all notices'});
+		// res.send({message: 'TODO return all notices'});
 	})
 
-	.post(function(req, res){
+	//creates a new post
+    .post(function(req, res){
 
-		//temporary solution
-
-		res.send({message: 'TODO create a new notice'});
-	});
+        var post = new Post(); 
+        post.text = req.body.text;
+        post.created_by = req.body.created_by;
+        post.save(function(err, post) {
+            if (err){
+                return res.send(500, err);
+            }
+            return res.json(post);
+        });
+    })
 
 router.route('/notices/:id')
 
 	//returns a particular post
 	.get(function(req, res){
-
-		res.send({message: 'TODO return a particular notice with ID ' + req.params.id});
+		Post.findById(req.params.id, function(err, post){
+            if(err)
+                res.send(err);
+            res.json(post);
+        });
+		// res.send({message: 'TODO return a particular notice with ID ' + req.params.id});
 	})
 
 	//update existing post
 	.put(function(req, res){
 
-		res.send({message: 'TODO modify a particular notice with iD ' + req.params.id});
+		Post.findById(req.params.id, function(err, post){
+            if(err){
+            	res.send(err);
+            }
+                
+            post.created_by = req.body.created_by;
+            post.text = req.body.text;
+
+            post.save(function(err, post){
+                if(err)
+                    res.send(err);
+
+                res.json(post);
+            });
+        });
+		// res.send({message: 'TODO modify a particular notice with iD ' + req.params.id});
 	})
 
 	//deletes a particular post
 	.delete(function(req, res){
 
-		res.send({message: 'TODO delete a particular notice wth ID ' + req.params.id});
+		Post.remove({_id: req.params.id}, function(err) {
+            if (err)
+                res.send(err);
+            res.json("deleted :(");
+        });
+		// res.send({message: 'TODO delete a particular notice wth ID ' + req.params.id});
 	});
 
 
