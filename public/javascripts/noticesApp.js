@@ -1,4 +1,23 @@
-var app = angular.module('noticesApp', []);
+var app = angular.module('noticesApp', ['ngRoute']);
+
+app.config(function($routeProvider){
+  $routeProvider
+    //the timeline display
+    .when('/', {
+      templateUrl: 'notices.html',
+      controller: 'mainController'
+    })
+    //the login display
+    .when('/login', {
+      templateUrl: 'login.html',
+      controller: 'authController'
+    })
+    //the signup display
+    .when('/register', {
+      templateUrl: 'register.html',
+      controller: 'authController'
+    });
+});
 
 app.controller('mainController', function($scope){
 	$scope.notices = [];

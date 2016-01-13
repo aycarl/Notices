@@ -40,14 +40,14 @@ router.route('/notices')
 	//creates a new post
     .post(function(req, res){
 
-        var post = new Post(); 
-        post.text = req.body.text;
-        post.created_by = req.body.created_by;
-        post.save(function(err, post) {
+        var notice = new Post();
+        notice.text = req.body.text;
+        notice.created_by = req.body.created_by;
+        notice.save(function(err, post) {
             if (err){
                 return res.send(500, err);
             }
-            return res.json(post);
+            return res.json(notice);
         });
     })
 

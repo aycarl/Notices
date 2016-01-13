@@ -7,6 +7,12 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//initialize models
+require('./models/models.js');
+
+var index = require('./routes/index');
+var api = require('./routes/api');
+var authenticate = require('./routes/authenticate')(passport);
 
 var mongoose = require('mongoose');
 //connect to mongodb
@@ -16,7 +22,7 @@ mongoose.connect("mongodb://localhost:27017/notices-test");
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views')); 
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -32,17 +38,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//initialize models
-require('./models/models.js');
-
-
-var api = require('./routes/api');
-var authenticate = require('./routes/authenticate')(passport);
-
 //// Initialize Passport
 var initPassport = require('./passport-init');
 initPassport(passport);
 
+app.use('/', index);
 app.use('/api', api);
 app.use('/auth', authenticate);
 

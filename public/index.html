@@ -1,0 +1,39 @@
+<!-- index.html -->
+
+<html>
+  <head>
+    <title>Notices</title>
+    <script src="javascripts/jquery-1.11.3.min.js"></script>
+    <script src="javascripts/angular.min.js"></script>
+    <script src="javascripts/angular-route.min.js"></script>
+    <script src="javascripts/noticesApp.js"></script>
+ 
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script> -->
+    <!--- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script> -->
+    <script type="text/javascript">
+      // $(document).ready(function(){
+      //   $('#newIcon').hide();
+
+      // })
+    </script>
+
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+  <body ng-app="chirpApp">
+    <div id="main" class="container">
+      <nav class="navbar-fluid navbar-default navbar-fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="#"> Notice! </a>
+          <p class="navbar-text"> Share posts with everyone!</p>
+          <p class="navbar-right navbar-text"><a href="#/login">Login</a> or <a href="#/register">Register</a></p>
+        </div>
+      </nav>
+      <div class="col-md-offset-2 col-md-8">
+        <div ng-view>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
