@@ -1,6 +1,6 @@
-var app = angular.module('noticesApp', ['ngRoute']);
-
-app.config(function($routeProvider){
+var noticesApp = angular.module('noticesApp', ['ngRoute']);
+console.log('inside notices app');
+noticesApp.config(function($routeProvider){
   $routeProvider
     //the timeline display
     .when('/', {
@@ -19,7 +19,7 @@ app.config(function($routeProvider){
     });
 });
 
-app.controller('mainController', function($scope){
+noticesApp.controller('mainController',['$scope', function($scope){
 	$scope.notices = [];
 	$scope.newNotice = {created_by: '', text: '', created_at: ''};
 	
@@ -31,9 +31,9 @@ app.controller('mainController', function($scope){
 		// $('#newIcon').css('animation','newEntry');
 
 	};
-});
+}]);
 
-app.controller('authController', function($scope){
+noticesApp.controller('authController',['$scope', function($scope){
 	$scope.user = {username: '', password: ''};
 	$scope.error_message = '';
 
@@ -46,4 +46,4 @@ app.controller('authController', function($scope){
     	//placeholder until authentication is implemented
     	$scope.error_message = 'registeration request for ' + $scope.user.username;
 	};
-});
+}]);
