@@ -7,16 +7,16 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+//connect to mongodb
+mongoose.connect('mongodb://localhost:27017/notices-test');
+
 //initialize models
 require('./models/models.js');
 
 var index = require('./routes/index');
 var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
-
-var mongoose = require('mongoose');
-//connect to mongodb
-mongoose.connect("mongodb://localhost:27017/notices-test");
 
 
 var app = express();
