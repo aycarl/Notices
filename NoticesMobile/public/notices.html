@@ -1,0 +1,46 @@
+<p>here</p>
+<div class="clearfix">
+   <!--  <form class="form-auth" ng-submit="post()">
+        <input required type="text" placeholder="your name" ng-model="newNotice.created_by" class="form-control span5"><br>
+        <textarea required maxlength="200" rows="3" placeholder="enter your notice" ng-model="newNotice.text" class="form-control span5"></textarea><br>
+        <input class="submit-btn" type="submit" value="Post it!">
+    </form> -->
+
+    <div id="post-stream">
+        <h2>Notices Feed</h2>
+    <!-- to be populated by notices -->
+        <div class="notice well" ng-repeat="notice in notices | orderBy:'created_at':true | filter: searchKey" ng-class-odd="'earth'" ng-class-even="'sky'" >
+            <div class="row " ng-swipe-right="getPainting()">
+                <h1 style="font-size:26px;">{{notice.text}}</h1>
+                <!-- <span id="newIcon"><i  class="material-icons neww">new_releases</i><i class="material-icons">not_interested</i> <i class="material-icons">stars</i> <i class="material-icons">visibility</i></span> -->
+            </div>
+            <div class="row">
+                <small>Posted by @{{notice.created_by}}</small>
+                <small class="pull-right">{{notice.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- commentModal -->
+<div id="postModal" class="modal bottom-sheet">
+    <div class="modal-content">
+     <form class="col s12 form-auth" ng-submit="post()">
+      <input required type="text" placeholder="your name" ng-model="newNotice.created_by" class="form-control span5"><br>
+        <textarea required maxlength="200" rows="3" placeholder="enter your notice" ng-model="newNotice.text" class="form-control span5"></textarea><br>
+        <div class="row center">
+             <input class="submit-btn" type="submit" value="Post it!">
+        </div>
+       
+    </form>
+  
+ <!--  <div class="row center">
+   <button class="center btn modal-action modal-close waves-effect waves-green btn-flat">Post</button>
+
+   </div> -->
+   </div>
+  <!--  <div class="modal-footer">
+     
+    </div>  -->
+  </div>
