@@ -1,4 +1,4 @@
-var noticesApp = angular.module('noticesApp', ['ngRoute']);
+var noticesApp = angular.module('noticesApp', ['ngRoute','ngTouch','angular-gestures']);
 console.log('inside notices app');
 noticesApp.config(function($routeProvider){
   $routeProvider
@@ -24,6 +24,10 @@ noticesApp.controller('mainController',['$scope', function($scope){
 	$scope.newNotice = {created_by: '', text: '', created_at: ''};
 	
 
+$scope.getPainting=function(){
+  console.log("keep working ,keep striving");
+}
+
 	$scope.post = function(){
 		$scope.newNotice.created_at = Date.now();
 		$scope.notices.push($scope.newNotice);
@@ -31,6 +35,8 @@ noticesApp.controller('mainController',['$scope', function($scope){
 		// $('#newIcon').css('animation','newEntry');
 
 	};
+
+ 
 }]);
 
 noticesApp.controller('authController',['$scope', function($scope){
