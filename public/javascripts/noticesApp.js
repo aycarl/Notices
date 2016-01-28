@@ -1,5 +1,11 @@
 var noticesApp = angular.module('noticesApp', ['ngRoute']);
 console.log('inside notices app');
+
+noticesApp.run(function($rootScope){
+   $rootScope.authenticated = false;
+   $rootScope.current_user = '';
+   console.log($rootScope.current_user);
+});
 noticesApp.config(function($routeProvider){
   $routeProvider
     //the timeline display
@@ -33,13 +39,25 @@ noticesApp.controller('mainController',['$scope', function($scope){
 	};
 }]);
 
-noticesApp.controller('authController',['$scope', function($scope){
+noticesApp.controller('authController',['$scope', function($scope,$http,$rootScope,$location){
 	$scope.user = {username: '', password: ''};
 	$scope.error_message = '';
 
 	$scope.login = function(){
     	//placeholder until authentication is implemented
-    	$scope.error_message = 'login request for ' + $scope.user.username;
+      
+      $http.post('/auth/login', $scope.user).success(function(data){
+        console.log('hello')
+        if(data.state == 'success'){
+          $rootScope.authenticated = true;
+          $rootScope.current_user = data.user.username;
+          location.path('/');
+        }
+        else {
+          $scope.error_message = 'invalid login details';
+        }
+      });
+    	
 	};
 
 	$scope.register = function(){
