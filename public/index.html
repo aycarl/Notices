@@ -6,7 +6,8 @@
     <script src="javascripts/jquery-1.11.3.min.js"></script>
     <script src="javascripts/angular.min.js"></script>
     <script src="javascripts/angular-route.min.js"></script>
-    <script src="javascripts/noticesApp.js"></script> 
+    <script src="javascripts/noticesApp.js"></script>
+    <script src="javascripts/angular-resource.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script> -->
     <!--- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script> -->
 
@@ -20,7 +21,9 @@
         <div class="container">
           <a class="navbar-brand" href="#/"> Notice! </a>
           <p class="navbar-text"> Share posts with everyone!</p>
-          <p class="navbar-right navbar-text"><a href="#login">Login</a> or <a href="#register">Register</a></p>
+          <p class="navbar-right navbar-text" ng-hide="authenticated"><a href="#login">Login</a> or <a href="#register">Register</a></p>
+          <p class="navbar-right navbar-text" ng-show="authenticated"><a href="#" ng-click="signout()">Logout</a></p>
+          <p class="navbar-right navbar-text" ng-show="authenticated">Signed in as {{current_user}}</p>
         </div>
       </nav>
       <div class="col-md-offset-2 col-md-8">

@@ -1,22 +1,23 @@
 <div class="clearfix">
-    <form class="form-auth" ng-submit="post()">
-        <input required type="text" placeholder="your name" ng-model="newNotice.created_by" class="form-control span5"><br>
+    <form class="form-auth" ng-submit="post()" ng-show="authenticated">
+        <!-- <input required type="text" placeholder="your name" ng-model="newNotice.created_by" class="form-control span5"><br> -->
+        <h4>{{current_user}} says</h4>
         <textarea required maxlength="200" rows="3" placeholder="enter your notice" ng-model="newNotice.text" class="form-control span5"></textarea><br>
         <input class="submit-btn" type="submit" value="Post it!">
     </form>
+</div>
 
-    <div id="post-stream">
-        <h2>Notices Feed</h2>
-    <!-- to be populated by notices -->
-        <div class="notice well" ng-repeat="notice in notices | orderBy:'created_at':true" ng-class-odd="'earth'" ng-class-even="'sky'">
-            <div class="row">
-                <h1 style="font-size:26px;">{{notice.text}}</h1>
-                <!-- <span id="newIcon"><i  class="material-icons neww">new_releases</i><i class="material-icons">not_interested</i> <i class="material-icons">stars</i> <i class="material-icons">visibility</i></span> -->
-            </div>
-            <div class="row">
-                <small>Posted by @{{notice.created_by}}</small>
-                <small class="pull-right">{{notice.created_at | date:"h:mma 'on' MMM d, y"}}</small>
-            </div>
+<div id="post-stream">
+    <h2>Notices Feed</h2>
+<!-- to be populated by notices -->
+    <div class="notice well" ng-repeat="notice in notices | orderBy:'created_at':true" ng-class-odd="'earth'" ng-class-even="'sky'">
+        <div class="row">
+            <h1 style="font-size:26px;">{{notice.text}}</h1>
+            <!-- <span id="newIcon"><i  class="material-icons neww">new_releases</i><i class="material-icons">not_interested</i> <i class="material-icons">stars</i> <i class="material-icons">visibility</i></span> -->
+        </div>
+        <div class="row">
+            <small>Posted by @{{notice.created_by}}</small>
+            <small class="pull-right">{{notice.created_at | date:"h:mma 'on' MMM d, y"}}</small>
         </div>
     </div>
 </div>
