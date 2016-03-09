@@ -1,9 +1,10 @@
 var noticesApp = angular.module('noticesApp', ['ngRoute', 'ngResource']).run(function($http, $rootScope){
   $rootScope.authenticated = false;
+  console.log('user authenticated:', $rootScope.authenticated);
   $rootScope.current_user = '';
 
   $rootScope.signout = function(){
-    $http.get('auth/signout');
+    $http.get('/auth/signout');
     $rootScope.authenticated = false;
     $rootScope.current_user = '';
   };
@@ -76,13 +77,15 @@ noticesApp.controller('authController', function($scope, $http, $rootScope, $loc
 	$scope.error_message = '';
 
 	$scope.login = function(){
+    //test display in the console
+    console.log('user authenticated:', $rootScope.authenticated);
     console.log('inside login function');
 
   	$http.post('/auth/login', $scope.user).success(function(data){
       if(data.state == 'success'){
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user.username;
-        
+        //text display in the console
         console.log('with current user: ', $rootScope.current_user);
         $location.path('/');
       }
