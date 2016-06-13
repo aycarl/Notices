@@ -1,23 +1,44 @@
-<div class="clearfix">
+<!-- <div class="clearfix">
     <form class="form-auth" ng-submit="post()" ng-show="authenticated">
-        <!-- <input required type="text" placeholder="your name" ng-model="newNotice.created_by" class="form-control span5"><br> -->
-        <h4>{{current_user}} says</h4>
+        <input required type="text" placeholder="your name" ng-model="newNotice.created_by" class="form-control span5"><br> -->
+        <!-- <h4>{{current_user}} says</h4>
         <textarea required maxlength="200" rows="3" placeholder="enter your notice" ng-model="newNotice.text" class="form-control span5"></textarea><br>
         <input class="submit-btn" type="submit" value="Post it!">
     </form>
-</div>
+</div> -->
 
 <div id="post-stream">
-    <h2>Notices Feed</h2>
-<!-- to be populated by notices -->
-    <div class="notice well" ng-repeat="notice in notices | orderBy:'created_at':true" ng-class-odd="'earth'" ng-class-even="'sky'">
-        <div class="row">
-            <h1 style="font-size:26px;">{{notice.text}}</h1>
-            <!-- <span id="newIcon"><i  class="material-icons neww">new_releases</i><i class="material-icons">not_interested</i> <i class="material-icons">stars</i> <i class="material-icons">visibility</i></span> -->
+    <div class="container">
+        <div class="col s12 m6">
+            <h2>Notices Feed</h2>
         </div>
+<!-- to be populated by notices -->
         <div class="row">
-            <small>Posted by @{{notice.created_by}}</small>
-            <small class="pull-right">{{notice.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+            <div class="col s12 m6" ng-repeat="notice in notices | orderBy:'created_at':true">
+                <div class="card">
+                    <div class="blue-grey darken-1">
+                        <div class="card-content white-text">
+                          <span class="card-title">{{notice.header}}</span>
+                          <p>{{notice.text}}</p>
+                        </div>
+                        <div class="card-action">
+                          <a href="#">Posted by @{{notice.created_by}}</a>
+                          <a href="#">{{notice.created_at | date:"h:mma 'on' MMM d, y"}}</a>
+                        </div>
+                    </div>
+                </div> <!-- ends the card info -->
+            </div>
+        </div>
+        <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large red">
+                <i class="large material-icons">mode_edit</i>
+            </a>
+            <ul>
+                <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+                <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+                <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+            </ul>
         </div>
     </div>
 </div>
