@@ -36,7 +36,7 @@ module.exports.login = function(req,res){
       // Redirect if it fails
       if (!user) {
         res
-          .status(404)
+          .status(200)
           .json({state: 'failure', user: null, message: "Invalid username or password"});
           return;
        }

@@ -3,10 +3,11 @@ var noticesApp = angular.module('noticesApp', ['ngRoute', 'ngResource']).run(fun
   console.log('user authenticated:', $rootScope.authenticated);
   $rootScope.current_user = '';
 
-  $rootScope.signout = function(){
-    $http.get('/auth/signout');
+  $rootScope.logout = function(){
+    $http.get('/auth/logout');
     $rootScope.authenticated = false;
     $rootScope.current_user = '';
+    $location.path('/');
   };
 
 });
@@ -82,36 +83,42 @@ noticesApp.factory('postService', function($resource){
 noticesApp.controller('authController', function($scope, $http, $rootScope, $location){
   $scope.user = {username: '', password: ''};
   $scope.error_message = '';
+  // $scope.user = {username: $scope.user.username, password: $scope.user.password};
+  console.log($scope.user);
 
   $scope.login = function(){
     //test display in the console
     console.log('user authenticated:', $rootScope.authenticated);
     console.log('inside login function');
 
-    $http.post('/auth/login', $scope.user).success(function(data){
-      if(data.state == 'success'){
+    $http.post('/auth/login', $scope.user).then(function(user){
+
+      if(user.data.state == 'success'){
         $rootScope.authenticated = true;
-        $rootScope.current_user = data.user.username;
+        console.log('user authenticated:', $rootScope.authenticated);
+        $rootScope.current_user = user.data.user;
+        console.log(user);
         //text display in the console
         console.log('with current user: ', $rootScope.current_user);
+        $scope.message = user.data.state;
         $location.path('/');
       }
       else{
-        $scope.error_message = data.message;
+        $scope.error_message = user.data.message;
       }
     });
-      // $scope.error_message = 'login request for ' + $scope.user.username;
   };
 
   $scope.register = function(){
-    $http.post('/auth/signup', $scope.user).success(function(data){
+    $http.post('/auth/signup', $scope.user).success(function(user){
       if(data.state == 'success'){
         $rootScope.authenticated = true;
-        $rootScope.current_user = data.user.username;
+        $rootScope.current_user = user.data.user;
+        $scope.message = user.data.state;
         $location.path('/');
       }
       else{
-        $scope.error_message = data.message;
+        $scope.error_message = user.data.message;
       }
     });
   };
