@@ -96,7 +96,7 @@ app.use(function(err, req, res, next) {
 //
 //
 //module.exports = app;
-var server = app.listen(app.get('port'),function () {
+var server = app.listen(process.env.PORT || app.get('port'),function () {
 	// body...
 	var port = server.address().port;
 	console.log('Magic happens on port '+ port);
