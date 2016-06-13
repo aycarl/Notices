@@ -22,7 +22,7 @@ noticesApp.config(function($routeProvider){
 noticesApp.controller('mainController',['$scope', function($scope){
 	$scope.notices = [];
 	$scope.newNotice = {created_by: '', text: '', created_at: ''};
-	
+
 
 	$scope.post = function(){
 		$scope.newNotice.created_at = Date.now();
@@ -33,7 +33,7 @@ noticesApp.controller('mainController',['$scope', function($scope){
 	};
 }]);
 
-noticesApp.controller('authController',['$scope', function($scope){
+noticesApp.controller('authController',['$scope','$http', function($scope,$http){
 	$scope.user = {username: '', password: ''};
 	$scope.error_message = '';
 
@@ -45,5 +45,9 @@ noticesApp.controller('authController',['$scope', function($scope){
 	$scope.register = function(){
     	//placeholder until authentication is implemented
     	$scope.error_message = 'registeration request for ' + $scope.user.username;
+
+      console.log($scope.user);
+      $http.post('/auth/signup',$scope.user)
+
 	};
 }]);
