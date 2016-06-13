@@ -3,30 +3,41 @@
 <html ng-app="noticesApp">
   <head >
     <title>Notices</title>
-    <script src="javascripts/jquery-1.11.3.min.js"></script>
-    <script src="javascripts/angular.min.js"></script>
-    <script src="javascripts/angular-route.min.js"></script>
-    <script src="javascripts/noticesApp.js"></script> 
+
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script> -->
     <!--- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script> -->
 
-    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
-    <link rel="stylesheet" href="stylesheets/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body ng-app="noticesApp">
-    <div id="main" class="container">
-      <nav class="navbar-fluid navbar-default navbar-fixed-top">
-        <div class="container">
-          <a class="navbar-brand" href="#/"> Notice! </a>
-          <p class="navbar-text"> Share posts with everyone!</p>
-          <p class="navbar-right navbar-text"><a href="#login">Login</a> or <a href="#register">Register</a></p>
-        </div>
-      </nav>
-      <div class="col-md-offset-2 col-md-8">
-        <div ng-view>
-        </div>
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="#/" class="brand-logo">Notice!</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li ng-show="authenticated"><a href="sass.html">Signed in as {{current_user}}</a></li>
+          <li ng-show="authenticated"><a href="#" ng-click="signout()">Logout</a></li>
+          <li ng-hide="authenticated"><a href="#login">Login</a> | <a href="#register">Register</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div id="main">
+      <div ng-view>
       </div>
     </div>
+    <!--Import jQuery before materialize.js-->
+    <script src="js/materialize.min.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/noticesApp.js"></script>
+    <script src="js/angular-resource.js"></script>
   </body>
 </html>

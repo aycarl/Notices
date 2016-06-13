@@ -79,5 +79,5 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
-app.listen(5000);
+app.listen(process.env.PORT || 5000) //.listen(5000);
 console.log('listening on 5000');

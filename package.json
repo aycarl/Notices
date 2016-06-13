@@ -1,5 +1,5 @@
 {
-  "name": "Notices",
+  "name": "notices",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -13,10 +13,25 @@
     "ejs": "~2.3.3",
     "express": "~4.13.1",
     "express-session": "^1.12.1",
+    "materialize-css": "^0.97.6",
     "mongoose": "^4.3.4",
     "morgan": "~1.6.1",
+    "nodemon": "^1.9.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0"
-  }
+  },
+  "description": "A virtual notice board for college students",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yao-carl/Notices.git"
+  },
+  "author": "carl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yao-carl/Notices/issues"
+  },
+  "homepage": "https://github.com/yao-carl/Notices#readme"
 }

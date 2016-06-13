@@ -24,6 +24,7 @@ module.exports = function(passport){
             }
 
             if (!user){
+                console.log('user not found: ', user.username)
                 return done('user not found', false);
             }
             // we found the user object, return
