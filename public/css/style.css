@@ -1,9 +1,5 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
 }
 
 @keyframes newEntry {
@@ -11,33 +7,13 @@ a {
 	to{color:red;}
  }
 
-.sky {
-	color:white;
-	background-color:lightblue;
-	padding:20px;
-	font-family:"Courier New";
-}
-
-.earth {
-	color:white;
-	background-color:orange;
-	padding:20px;
-	font-family:"Courier New";
-}
-
-.neww{
-    color:white;
-    animation:newEntry 4s infinite;
-
-}
-
 .form-auth {
-	max-width: 330px;
+	/*max-width: 330px;*/
 	padding: 5px;
 	margin: 0 auto;
 }
 
-.submit-btn {
-	background-color: #b1dbff;
-	margin: 10px 0 10px 0;
+.time-stamp {
+	float: right; 
+	right: 12px;
 }
