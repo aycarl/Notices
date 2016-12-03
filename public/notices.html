@@ -1,44 +1,56 @@
-<!-- <div class="clearfix">
-    <form class="form-auth" ng-submit="post()" ng-show="authenticated">
-        <input required type="text" placeholder="your name" ng-model="newNotice.created_by" class="form-control span5"><br> -->
-        <!-- <h4>{{current_user}} says</h4>
-        <textarea required maxlength="200" rows="3" placeholder="enter your notice" ng-model="newNotice.text" class="form-control span5"></textarea><br>
-        <input class="submit-btn" type="submit" value="Post it!">
-    </form>
-</div> -->
-
-<div id="post-stream">
-    <div class="container">
+<div class="container">
+    <div class="row">
         <div class="col s12 m6">
-            <h2>Notices Feed</h2>
         </div>
-<!-- to be populated by notices -->
-        <div class="row">
-            <div class="col s12 m6" ng-repeat="notice in notices | orderBy:'created_at':true">
-                <div class="card">
-                    <div class="blue-grey darken-1">
-                        <div class="card-content white-text">
-                          <span class="card-title">{{notice.header}}</span>
-                          <p>{{notice.text}}</p>
-                        </div>
-                        <div class="card-action">
-                          <a href="#">Posted by @{{notice.created_by}}</a>
-                          <a href="#">{{notice.created_at | date:"h:mma 'on' MMM d, y"}}</a>
-                        </div>
+    </div>
+    <!-- to be populated by notices -->
+    <div class="row">
+        <div class="col s12 m6" ng-repeat="notice in notices | orderBy:'created_at':true">
+            <div class="card">
+                <div class="blue-grey darken-1">
+                    <div class="card-image">
+                      <img class="activator"  src="{{notice.img}}">
+                      <!-- <span class="card-title">Card Title</span> -->
                     </div>
-                </div> <!-- ends the card info -->
+                    <div class="card-content white-text">
+                      <span class="card-title">{{notice.header}}</span>
+                      <p>{{notice.text}}</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#">{{notice.created_by}}</a>
+                      <a class="time-stamp" href="#"><i class="material-icons">schedule</i>{{notice.created_at | date:"h:mma 'on' MMM d, y"}}</a>
+                    </div>
+                </div>
+            </div> <!-- ends the card info -->
+        </div>
+    </div>
+    <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+        <!-- modal trigger for new notice -->
+        <a class="btn-floating btn-large red modal-trigger" href="#new">
+            <i class="large material-icons">mode_edit</i>
+        </a>
+        
+        <!-- new notice form modal -->
+        <div id="new" class="modal">
+            <div class="modal-content">
+                <h4>Modal Header</h4>
+                <p>A bunch of text</p>
+                <form class="form-auth" ng-submit="post()" ng-show="authenticated">
+                    <input required type="text" placeholder="your name" ng-model="newNotice.created_by" class="form-control span5"><br>
+                    <h4>{{current_user}} says</h4>
+                    <textarea required maxlength="200" rows="3" placeholder="enter your notice" ng-model="newNotice.text" class="form-control span5"></textarea><br>
+                    <input class="submit-btn" type="submit" value="Post it!">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
             </div>
         </div>
-        <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
-            <a class="btn-floating btn-large red">
-                <i class="large material-icons">mode_edit</i>
-            </a>
-            <ul>
-                <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-                <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-                <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-                <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-            </ul>
-        </div>
+        <ul>
+            <li><a class="btn-floating red"><i class="material-icons">mic</i></a></li>
+            <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+            <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+            <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+        </ul>
     </div>
 </div>

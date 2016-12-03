@@ -1,8 +1,22 @@
-<form class="form-auth" ng-submit="login()">
-    <h2>Login</h2>
-    <p class="text-warning">{{error_message}}</p>
-    <p class="login-status" ng-show="authenticated">Sign in {{message}}</p>
-    <input type="username" ng-model="user.username" placeholder="Username" class="form-control"><br>
-    <input type="password" ng-model="user.password" placeholder="Password" class="form-control"><br>
-    <input type="submit" value="Log in" class="submit-btn" />
-</form>
+<div class="row">
+    <div class="col s12 m6 l4 offset-l4">
+		<form class="form-auth col s12" ng-submit="login()">
+		    <h3>Login</h3>
+		    <p class="text-warning">{{error_message}}</p>
+		    <p class="login-status" ng-show="authenticated">Sign in {{message}}</p>
+		    <div class="row">
+		        <div class="input-field col s12">
+			        <input type="text" ng-model="user.username"  id="username" class="validate">
+			        <label for="username">Username</label>
+		        </div>
+		    </div>
+		    <div class="row">
+		        <div class="input-field col s12">
+		            <input type="password" ng-model="user.password" id="pswd" class="validate">
+		            <label for="pswd">Password</label>
+		        </div>
+		    </div>
+		    <input type="submit" value="Log in" class="waves-effect waves-light btn" style="float: right; right: 12px" />
+		</form>
+	</div>
+</div>

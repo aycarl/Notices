@@ -1,4 +1,4 @@
-var noticesApp = angular.module('noticesApp', ['ngRoute', 'ngResource']).run(function($http, $rootScope){
+var noticesApp = angular.module('noticesApp', ['ngRoute', 'ngResource']).run(function($http, $rootScope, $location){
   $rootScope.authenticated = false;
   console.log('user authenticated:', $rootScope.authenticated);
   $rootScope.current_user = '';
@@ -7,7 +7,7 @@ var noticesApp = angular.module('noticesApp', ['ngRoute', 'ngResource']).run(fun
     $http.get('/auth/logout');
     $rootScope.authenticated = false;
     $rootScope.current_user = '';
-    $location.path('/');
+    $location.path('/#/');
   };
 
 });
@@ -91,6 +91,9 @@ noticesApp.controller('authController', function($scope, $http, $rootScope, $loc
     console.log('user authenticated:', $rootScope.authenticated);
     console.log('inside login function');
 
+    console.log($scope.user.username);
+    console.log($scope.user.password);
+
     $http.post('/auth/login', $scope.user).then(function(user){
 
       if(user.data.state == 'success'){
@@ -111,7 +114,7 @@ noticesApp.controller('authController', function($scope, $http, $rootScope, $loc
 
   $scope.register = function(){
     $http.post('/auth/signup', $scope.user).success(function(user){
-      if(data.state == 'success'){
+      if(user.data.state == 'success'){
         $rootScope.authenticated = true;
         $rootScope.current_user = user.data.user;
         $scope.message = user.data.state;
