@@ -51,7 +51,7 @@ var VideoSchema = new mongoose.Schema({
 
 var OrganisationSchema = new mongoose.Schema({
   name: String,
-  description:String
+  description: String,
   created_at: {type: Date, 'default': Date.now}
 })
 
