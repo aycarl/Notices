@@ -9,8 +9,7 @@ var UserSchema = new mongoose.Schema({
     email: String,
     username: String,
     password: String, //hash created from password
-    privilege: String,
-    organisations:[OrganisationSchema],
+    privilege: String,    //organisations: [OrganisationSchema],
     is_deleted: { type: Number, 'default': 0 },
     created_at: {type: Date, 'default': Date.now}
 });
@@ -24,11 +23,8 @@ var PostSchema = new mongoose.Schema({
     title: String,
     category: String,
     is_deleted: { type: Number, 'default': 0 },
-    location:{ type:[Number], index:'2dsphere'},
-    resources:[ResourceSchema],
-    image:[ImageSchema],
-    links:[String],
-    video:[VideoSchema]
+    location:{ type:[Number], index:'2dsphere'},//    resources:[ResourceSchema],    image:[ImageSchema],
+    links: String //,    video:[VideoSchema]
 });
 
 var ResourceSchema = new mongoose.Schema({
