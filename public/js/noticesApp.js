@@ -36,7 +36,7 @@ noticesApp.config(function($routeProvider){
 
 noticesApp.controller('mainController', ['$scope', '$http', function($scope, $http, postService){
 
-  $http.get('js/data.json').success(function(data){
+  $http.get('/js/data.json').success(function(data){
     $scope.notices = data;
     console.log('List of notices is beings accessed!');
   });
