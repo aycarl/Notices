@@ -7,7 +7,7 @@ var noticesApp = angular.module('noticesApp', ['ngRoute', 'ngResource']).run(fun
     $http.get('/auth/logout');
     $rootScope.authenticated = false;
     $rootScope.current_user = '';
-    $location.path('/');
+    $location.path('/#/');
   };
 
 });
@@ -91,8 +91,8 @@ noticesApp.controller('authController', function($scope, $http, $rootScope, $loc
     console.log('user authenticated:', $rootScope.authenticated);
     console.log('inside login function');
 
-    console.log($scope.username);
-    console.log($scope.password);
+    console.log($scope.user.username);
+    console.log($scope.user.password);
 
     $http.post('/auth/login', $scope.user).then(function(user){
 

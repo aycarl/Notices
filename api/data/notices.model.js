@@ -10,6 +10,8 @@ var UserSchema = new mongoose.Schema({
 });
 
 var PostSchema = new mongoose.Schema({
+	header: String,
+	img: String,
     created_by: {type: mongoose.Schema.ObjectId, ref: 'User'},
     created_at: {type: Date, default: Date.now},
     text: String
