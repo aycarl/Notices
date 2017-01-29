@@ -1,0 +1,166 @@
+<!-- index.html -->
+<!DOCTYPE HTML>
+<html>
+  <head >
+    <title>Notices</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/> -->
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+      
+  </head>
+  <body>
+    <header>
+      <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container">
+          <a href="#/" class="brand-logo">Notice!</a>
+          <!-- replace with Google AUthentication -->
+          <div hidden id="user-pic"></div>
+          <div hidden id="user-name"></div>
+          <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+            Sign-out
+          </button>
+          <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+            <i class="material-icons">account_circle</i>Sign-in with Google
+          </button>
+      </nav>
+    </header>
+    <div id="main">
+      <div class="container">
+          <!-- to be populated by notices -->
+          <div class="row">
+              <div class="col s12 m4">
+                  <div class="card #42a5f5 blue lighten-1">
+                      <div class="card-image">
+                        <img class="activator"  src="./images/school.jpg">
+                        <span class="card-title">Card Title</span>
+                      </div>
+                      <div class="card-content white-text">
+                        <span class="card-title">Party!</span>
+                        <p>Let's have fun!</p>
+                      </div>
+                      <div class="card-action white-text">
+                        <a href="#"></a>
+                        <a class="time-stamp" href="#"><i class="material-icons">schedule</i></a>
+                      </div>
+                  </div> <!-- ends the card info -->
+              </div>
+              <div class="col s12 m4">
+                  <div class="card #42a5f5 blue lighten-1">
+                      <div class="card-image">
+                        <img class="activator"  src="./images/asset.jpg">
+                        <!-- <span class="card-title">Card Title</span> -->
+                      </div>
+                      <div class="card-content white-text">
+                        <span class="card-title">Party!</span>
+                        <p>Let's have fun!</p>
+                      </div>
+                      <div class="card-action white-text">
+                        <a href="#"></a>
+                        <a class="time-stamp" href="#"><i class="material-icons">schedule</i></a>
+                      </div>
+                  </div> <!-- ends the card info -->
+              </div>
+              <div class="col s12 m4">
+                  <div class="card #42a5f5 blue lighten-1">
+                      <div class="card-image">
+                        <img class="activator"  src="./images/flower.gif">
+                        <!-- <span class="card-title">Card Title</span> -->
+                      </div>
+                      <div class="card-content white-text">
+                        <span class="card-title">Party!</span>
+                        <p>Let's have fun!</p>
+                      </div>
+                      <div class="card-action white-text">
+                        <a href="#"></a>
+                        <a class="time-stamp" href="#"><i class="material-icons">schedule</i></a>
+                      </div>
+                  </div> <!-- ends the card info -->
+              </div>
+          </div>
+          <!-- Modal Structure -->
+          <div id="modal1" class="modal modal-fixed-footer">
+            <div class="modal-content">
+              <div class="row">
+                  <div class="col s12 m6 offset-m3">
+                  <form id="notice-form" class="form-auth col s12" ng-submit="register()">
+                      <h3>Register</h3>
+                      <p class="text-warning">{{error_message}}</p>
+                      <p class="login-status" ng-show="authenticated">Sign in {{message}}</p>
+                      <div class="row">
+                          <div class="input-field col s6">
+                            <input ng-model="user.first_name" id="first_name" type="text" class="validate">
+                            <label for="first_name">First Name</label>
+                          </div>
+                          <div class="input-field col s6">
+                            <input ng-model="user.last_name" id="last_name" type="text" class="validate">
+                            <label for="last_name">Last Name</label>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col s12">
+                            <input ng-model="user.email" id="email" type="email" class="validate">
+                            <label for="email">Email</label>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col s12">
+                            <input type="text" ng-model="user.username" id="username" class="validate">
+                            <label for="username">Username</label>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col s12">
+                              <input type="password" ng-model="user.password" id="pswd" class="validate">
+                              <label for="pswd">Password</label>
+                          </div>
+                      </div>
+                      <input type="submit" value="Register" class="waves-effect waves-light btn" style="float: right; right: 12px" />
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a id="submit" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
+            </div>
+          </div>
+          <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 45px;">
+              <a class="btn-floating btn-large waves-effect waves-light red" href="#modal1"><i class="material-icons">add</i></a>
+          </div>
+      </div>
+    </div>
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAHHshoj3i_CvI9EZnd_iUmYhmvyv8x_p4",
+        authDomain: "notice-d91bb.firebaseapp.com",
+        databaseURL: "https://notice-d91bb.firebaseio.com",
+        storageBucket: "notice-d91bb.appspot.com",
+        messagingSenderId: "226118271572"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <!--Import jQuery before materialize.js-->
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <!-- <script src="js/materialize.min.js"></script> -->
+    <script src="js/main.js"></script>
+  </body>
+</html>
