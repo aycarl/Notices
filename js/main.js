@@ -30,30 +30,32 @@ function Notices() {
   this.noticeDescInput = document.getElementById('notice-description');
   
   this.submitButton = document.getElementById('submit');
-  this.submitImageButton = document.getElementById('submitImage');
+  // this.submitImageButton = document.getElementById('submitImage');
   this.imageForm = document.getElementById('image-form');
   this.mediaCapture = document.getElementById('mediaCapture');
   this.userPic = document.getElementById('user-pic');
   this.userName = document.getElementById('user-name');
-  this.signInButton = document.getElementById('sign-in');
-  this.signOutButton = document.getElementById('sign-out');
-  this.signInSnackbar = document.getElementById('must-signin-snackbar');
+  // this.signInButton = document.getElementById('sign-in');
+  // this.signOutButton = document.getElementById('sign-out');
+  // this.signInSnackbar = document.getElementById('must-signin-snackbar');
 
   // Saves message on form submit.
   this.noticeForm.addEventListener('submit', this.saveNotice.bind(this));
-  this.signOutButton.addEventListener('click', this.signOut.bind(this));
-  this.signInButton.addEventListener('click', this.signIn.bind(this));
+  // this.signOutButton.addEventListener('click', this.signOut.bind(this));
+  // this.signInButton.addEventListener('click', this.signIn.bind(this));
 
   // Toggle for the button.
   var buttonTogglingHandler = this.toggleButton.bind(this);
-  this.noticeInput.addEventListener('keyup', buttonTogglingHandler);
-  this.noticeInput.addEventListener('change', buttonTogglingHandler);
+  this.noticeTitleInput.addEventListener('keyup', buttonTogglingHandler);
+  this.noticeTitleInput.addEventListener('change', buttonTogglingHandler);
+  this.noticeDescInput.addEventListener('keyup', buttonTogglingHandler);
+  this.noticeDescInput.addEventListener('change', buttonTogglingHandler);
 
   // Events for image upload.
-  this.submitImageButton.addEventListener('click', function() {
-    this.mediaCapture.click();
-  }.bind(this));
-  this.mediaCapture.addEventListener('change', this.saveImageNotice.bind(this));
+  // this.submitImageButton.addEventListener('click', function() {
+  //   this.mediaCapture.click();
+  // }.bind(this));
+  // this.mediaCapture.addEventListener('change', this.saveImageNotice.bind(this));
 
   this.initFirebase();
 }
@@ -148,45 +150,45 @@ Notices.prototype.saveImageMessage = function(event) {
 // Signs-in Friendly Chat.
 Notices.prototype.signIn = function() {
   // TODO(DEVELOPER): Sign in Firebase with credential from the Google user.
-  var provider = new firebase.auth.GoogleAuthProvider();
-  this.auth.signInWithPopup(provider);
+  // var provider = new firebase.auth.GoogleAuthProvider();
+  // this.auth.signInWithPopup(provider);
 };
 
 // Signs-out of Friendly Chat.
 Notices.prototype.signOut = function() {
   // TODO(DEVELOPER): Sign out of Firebase.
-  this.auth.signOut();
+  // this.auth.signOut();
 };
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 Notices.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
     // Get profile pic and user's name from the Firebase user object.
-    var profilePicUrl = user.photoURL; // Only change these two lines!
-    var userName = user.displayName;   // Only change these two lines!
+  //   var profilePicUrl = user.photoURL; // Only change these two lines!
+  //   var userName = user.displayName;   // Only change these two lines!
 
-    // Set the user's profile pic and name.
-    this.userPic.style.backgroundImage = 'url(' + profilePicUrl + ')';
-    this.userName.textContent = userName;
+  //   // Set the user's profile pic and name.
+  //   this.userPic.style.backgroundImage = 'url(' + profilePicUrl + ')';
+  //   this.userName.textContent = userName;
 
-    // Show user's profile and sign-out button.
-    this.userName.removeAttribute('hidden');
-    this.userPic.removeAttribute('hidden');
-    this.signOutButton.removeAttribute('hidden');
+  //   // Show user's profile and sign-out button.
+  //   this.userName.removeAttribute('hidden');
+  //   this.userPic.removeAttribute('hidden');
+  //   this.signOutButton.removeAttribute('hidden');
 
-    // Hide sign-in button.
-    this.signInButton.setAttribute('hidden', 'true');
+  //   // Hide sign-in button.
+  //   this.signInButton.setAttribute('hidden', 'true');
 
-    // We load currently existing chant notices.
-    this.loadnotices();
-  } else { // User is signed out!
-    // Hide user's profile and sign-out button.
-    this.userName.setAttribute('hidden', 'true');
-    this.userPic.setAttribute('hidden', 'true');
-    this.signOutButton.setAttribute('hidden', 'true');
+  //   // We load currently existing chant notices.
+  //   this.loadnotices();
+  // } else { // User is signed out!
+  //   // Hide user's profile and sign-out button.
+  //   this.userName.setAttribute('hidden', 'true');
+  //   this.userPic.setAttribute('hidden', 'true');
+  //   this.signOutButton.setAttribute('hidden', 'true');
 
-    // Show sign-in button.
-    this.signInButton.removeAttribute('hidden');
+  //   // Show sign-in button.
+  //   this.signInButton.removeAttribute('hidden');
   }
 };
 
@@ -263,7 +265,7 @@ Notices.prototype.displayMessage = function(key, name, title, date, time, descri
 // Enables or disables the submit button depending on the values of the input
 // fields.
 Notices.prototype.toggleButton = function() {
-  if (this.noticeInput.value) {
+  if (this.noticeTitleInput.value || this.noticeDescInput.value) {
     this.submitButton.removeAttribute('disabled');
   } else {
     this.submitButton.setAttribute('disabled', 'true');
