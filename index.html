@@ -32,45 +32,52 @@
         <div class="nav-wrapper container">
           <a href="#/" class="brand-logo">Notice!</a>
           <!-- replace with Google AUthentication -->
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a hidden id="user-pic"></a></li>
+            <li><a hidden id="user-name">Components</a></li>
+            <li><a hidden id="sign-out">Sign-out</a></li>
+            <li><a hidden id="sign-in"><i class="material-icons left">account_circle</i>Sign-in with Google</a></li> <!--  -->
+          </ul>
       </nav>
     </header>
     <div id="main">
       <div class="container">
           <!-- to be populated by notices -->
           <div class="row">
-              <div class="col s12 m4">
+              <div id="notice-col-1" class="col s12 m4">
+                  <div class="card #42a5f5 blue lighten-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Party!</span>
+                        <p>Let's have fun! I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                      </div>
+                  </div> <!-- ends the card info -->
                   <div class="card #42a5f5 blue lighten-1">
                       <div class="card-image">
                         <img class="activator"  src="./images/school.jpg">
-                        <span class="card-title">Card Title</span>
                       </div>
                       <div class="card-content white-text">
-                        <span class="card-title">Party!</span>
+                        <span class="card-title activator">Card Title<i class="material-icons right">more_vert</i></span>
                         <p>Let's have fun!</p>
                       </div>
-                      <div class="card-action white-text">
-                        <a href="#"></a>
-                        <a class="time-stamp" href="#"><i class="material-icons">schedule</i></a>
+                      <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
                       </div>
                   </div> <!-- ends the card info -->
               </div>
-              <div class="col s12 m4">
+              <div id="notice-col-2" class="col s12 m4">
                   <div class="card #42a5f5 blue lighten-1">
                       <div class="card-image">
-                        <img class="activator"  src="./images/asset.jpg">
+                        <img class="activator"  src="./images/Ashesi DLab Maker Skills Sessions - DJ Mixes and Mashups-01.jpg">
                         <!-- <span class="card-title">Card Title</span> -->
                       </div>
                       <div class="card-content white-text">
                         <span class="card-title">Party!</span>
                         <p>Let's have fun!</p>
                       </div>
-                      <div class="card-action white-text">
-                        <a href="#"></a>
-                        <a class="time-stamp" href="#"><i class="material-icons">schedule</i></a>
-                      </div>
-                  </div> <!-- ends the card info -->
+                  </div>
               </div>
-              <div class="col s12 m4">
+              <div id="notice-col-3" class="col s12 m4">
                   <div class="card #42a5f5 blue lighten-1">
                       <div class="card-image">
                         <img class="activator"  src="./images/flower.gif">
@@ -80,11 +87,7 @@
                         <span class="card-title">Party!</span>
                         <p>Let's have fun!</p>
                       </div>
-                      <div class="card-action white-text">
-                        <a href="#"></a>
-                        <a class="time-stamp" href="#"><i class="material-icons">schedule</i></a>
-                      </div>
-                  </div> <!-- ends the card info -->
+                  </div>
               </div>
           </div>
           <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 45px;">
@@ -94,44 +97,64 @@
           <div id="add-notice" class="modal modal-fixed-footer">
             <div class="modal-content">
               <div class="row">
-                  <div class="col s12 m6 offset-m3">
+                  <div class="col s12 m12">
                   <form id="notice-form" class="form-auth col s12"">
-                      <h3>Add a Notice</h3>
+                      <h4>Add a Notice</h4>
                       <p hidden="true" class="text-warning">{{error_message}}</p>
                       <!-- <p class="login-status" ng-show="authenticated">Sign in {{message}}</p> -->
                       <div class="row">
-                          <div class="input-field col s6">
+                          <div class="input-field col s12">
                             <input id="notice-title" type="text" class="validate">
                             <label for="first_notice-titlename">Title</label>
                           </div>
                       </div>
                       <div class="row">
-                          <div class="input-field col s6">
+                          <div class="input-field col s12">
                             <input id="notice-description" type="text" class="validate">
                             <label for="notice-description">Description</label>
                           </div>
                       </div>
                       <div class="row">
-                          <div class="input-field col s12">
-                            <input ng-model="user.email" id="email" type="email" class="validate">
-                            <label for="email">Email</label>
                           </div>
+                          <div class="col s6">
+                            <label for="notice-date">Date</label>
+                          </div>
+                          <div class="col s6">
+                            <label for="notice-time">Time</label>
+                          </div>
+                          <div class="input-field col s6">
+                            <input id="notice-date" type="date" class="validate">
+                            <!-- <label for="notice-date">Date</label> -->
+                          </div>
+                          <div class="input-field col s6">
+                            <input id="notice-time" type="time" class="validate">
+                            <!-- <label for="notice-time">Time</label> -->
+                      </div>
+                      <!-- <div class="row">
                           <div class="input-field col s12">
-                            <input type="text" ng-model="user.username" id="username" class="validate">
-                            <label for="username">Da</label>
+                            <input id="notice-email" type="email" class="validate">
+                            <label for="notice-email">Contact Email (optional)</label>
                           </div>
                       </div>
-                      <input type="submit" value="Register" class="waves-effect waves-light btn" style="float: right; right: 12px" />
+                      <div class="row">
+                          <div class="input-field col s12">
+                            <input id="notice-contact" type="number" class="validate">
+                            <label for="notice-contact">Contact Number (optional)</label>
+                          </div>
+                      </div> -->
+                      <input id="submit" type="submit" value="Add" class="modal-action modal-close waves-effect waves-light btn" style="float: right; right: 12px" />
                   </form>
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <a id="submit" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</a>
-            </div>
+            <!-- <div class="modal-footer">
+              <span>Change a life today!</span>
+            </div> -->
           </div>
       </div>
     </div>
+
+
     <!-- firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script>
