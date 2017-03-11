@@ -22,6 +22,7 @@ function Notices() {
   //count of notices displayed
   this.noticeCount = 0;
 
+
   // Shortcuts to DOM Elements.
   this.noticeFirstList = document.getElementById('notice-col-1');
   this.noticeSecondList = document.getElementById('notice-col-2');
@@ -85,7 +86,7 @@ Notices.prototype.loadNotices = function() {
   // Loads the last 12 notices and listen for new ones.
   var setNotices = function(data) {
     var val = data.val();
-    this.displayMessage(data.key, val.name, val.title, val.date, val.time, val.description);
+    this.displayNotice(data.key, val.name, val.title, val.date, val.time, val.description);
   }.bind(this);
   this.noticesRef.limitToLast(12).on('child_added', setNotices);
   this.noticesRef.limitToLast(12).on('child_changed', setNotices);
@@ -101,6 +102,8 @@ Notices.prototype.saveNotice = function(e) {
       // TODO(DEVELOPER): push new message to Firebase.
       var currentUser = this.auth.currentUser;
       // Add a new message entry to the Firebase Database.
+
+      //Add time of "post"
       this.noticesRef.push({
         name: currentUser.displayName,
         title: this.noticeTitleInput.value,
@@ -188,7 +191,7 @@ Notices.prototype.onAuthStateChanged = function(user) {
     this.signInButton.setAttribute('hidden', 'true');
 
     // We load currently existing chant notices.
-    // this.loadnotices();
+     this.loadNotices();
   } else { // User is signed out!
     // Hide user's profile and sign-out button.
     this.userName.setAttribute('hidden', 'true');
@@ -238,7 +241,7 @@ Notices.NOTICE_IMG_TEMPLATE =
 
 // Template for notices without images.
 Notices.NOTICE_TEMPLATE =
-    '<div class="card #42a5f5 blue lighten-1">' +
+    '<div class="card blue lighten-1">' +
       '<div class="card-content white-text">' +
         '<span class="card-title">Party!</span>' +
         '<p class="notice-description">Let\'s have fun!</p>' +
@@ -252,12 +255,12 @@ Notices.NOTICE_TEMPLATE =
 Notices.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 // Displays a Message in the UI.
-Notices.prototype.displayMessage = function(key, name, title, date, time, description) {
+Notices.prototype.displayNotice = function(key, name, title, date, time, description) {
   var div = document.getElementById(key);
   // If an element for that message does not exists yet we create it.
   if (!div) {
     var container = document.createElement('div');
-    container.innerHTML = Notices.MESSAGE_TEMPLATE;
+    container.innerHTML = Notices.NOTICE_TEMPLATE;
     div = container.firstChild;
     div.setAttribute('id', key);
     //tricky algorithm part with 3 columns 
@@ -276,10 +279,10 @@ Notices.prototype.displayMessage = function(key, name, title, date, time, descri
         this.noticeFirstList.appendChild(div);
     }
   }
-  if (picUrl) {
-    div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
-  }
-  div.querySelector('.name').textContent = name;
+  // if (picUrl) {
+  //   div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
+  // }
+  // div.querySelector('.name').textContent = name;
   var noticeTitle = div.querySelector('.card-title');
   if (title) { // If the title is provided.
     noticeTitle.textContent = title;
@@ -312,9 +315,10 @@ Notices.prototype.displayMessage = function(key, name, title, date, time, descri
   }
   // Show the card fading-in.
   setTimeout(function() {div.classList.add('visible')}, 1);
-  this.noticeList.scrollTop = this.noticeList.scrollHeight;
-  this.noticeInput.focus();
-  this.noticeCount =+ 1;
+  // this.noticeList.scrollTop = this.noticeList.scrollHeight;
+  // this.noticeInput.focus();
+  this.noticeCount = this.noticeCount + 1;
+  // alert(this.noticeCount);
 };
 
 // Enables or disables the submit button depending on the values of the input
@@ -343,5 +347,5 @@ Notices.prototype.checkSetup = function() {
 };
 
 window.onload = function() {
-  window.Notices = new Notices();
+  window.notices = new Notices();
 };

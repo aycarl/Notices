@@ -31,8 +31,15 @@
       <nav class="light-blue lighten-1" role="navigation">
         <div class="nav-wrapper container">
           <a href="#/" class="brand-logo">Notice!</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <!-- replace with Google AUthentication -->
           <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a hidden id="user-pic"></a></li>
+            <li><a hidden id="user-name">Components</a></li>
+            <li><a hidden id="sign-out">Sign-out</a></li>
+            <li><a hidden id="sign-in"><i class="material-icons left">account_circle</i>Sign-in with Google</a></li> <!--  -->
+          </ul>
+          <ul id="mobile-demo" class="side-nav">
             <li><a hidden id="user-pic"></a></li>
             <li><a hidden id="user-name">Components</a></li>
             <li><a hidden id="sign-out">Sign-out</a></li>
@@ -45,13 +52,14 @@
           <!-- to be populated by notices -->
           <div class="row">
               <div id="notice-col-1" class="col s12 m4">
-                  <div class="card #42a5f5 blue lighten-1">
+                  <!-- <div class="card #42a5f5 blue lighten-1">
                       <div class="card-content white-text">
                         <span class="card-title">Party!</span>
                         <p>Let's have fun! I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
                       </div>
-                  </div> <!-- ends the card info -->
-                  <div class="card #42a5f5 blue lighten-1">
+                  </div>  -->
+                  <!-- ends the card info -->
+                  <!-- <div class="card #42a5f5 blue lighten-1">
                       <div class="card-image">
                         <img class="activator"  src="./images/school.jpg">
                       </div>
@@ -63,31 +71,32 @@
                         <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
                         <p>Here is some more information about this product that is only revealed once clicked on.</p>
                       </div>
-                  </div> <!-- ends the card info -->
+                  </div>  -->
+                  <!-- ends the card info -->
               </div>
               <div id="notice-col-2" class="col s12 m4">
-                  <div class="card #42a5f5 blue lighten-1">
+                  <!-- <div class="card #42a5f5 blue lighten-1">
                       <div class="card-image">
-                        <img class="activator"  src="./images/Ashesi DLab Maker Skills Sessions - DJ Mixes and Mashups-01.jpg">
+                        <img class="activator"  src="./images/Ashesi DLab Maker Skills Sessions - DJ Mixes and Mashups-01.jpg"> -->
                         <!-- <span class="card-title">Card Title</span> -->
-                      </div>
+                      <!-- </div>
                       <div class="card-content white-text">
                         <span class="card-title">Party!</span>
                         <p>Let's have fun!</p>
                       </div>
-                  </div>
+                  </div> -->
               </div>
               <div id="notice-col-3" class="col s12 m4">
-                  <div class="card #42a5f5 blue lighten-1">
+                  <!-- <div class="card #42a5f5 blue lighten-1">
                       <div class="card-image">
-                        <img class="activator"  src="./images/flower.gif">
+                        <img class="activator"  src="./images/flower.gif"> -->
                         <!-- <span class="card-title">Card Title</span> -->
-                      </div>
+                      <!-- </div>
                       <div class="card-content white-text">
                         <span class="card-title">Party!</span>
                         <p>Let's have fun!</p>
                       </div>
-                  </div>
+                  </div> -->
               </div>
           </div>
           <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 45px;">
@@ -110,7 +119,7 @@
                       </div>
                       <div class="row">
                           <div class="input-field col s12">
-                            <input id="notice-description" type="text" class="validate">
+                            <input id="notice-description" type="text" class="materialize-textarea">
                             <label for="notice-description">Description</label>
                           </div>
                       </div>
@@ -123,7 +132,7 @@
                             <label for="notice-time">Time</label>
                           </div>
                           <div class="input-field col s6">
-                            <input id="notice-date" type="date" class="validate">
+                            <input id="notice-date" type="date" class="datepicker">
                             <!-- <label for="notice-date">Date</label> -->
                           </div>
                           <div class="input-field col s6">
@@ -177,6 +186,11 @@
       $(document).ready(function(){
         // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
         $('.modal').modal();
+        $(".button-collapse").sideNav();
+        $('.datepicker').pickadate({
+          selectMonths: true, // Creates a dropdown to control month
+          selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
       });
     </script>
   </body>
