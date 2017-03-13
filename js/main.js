@@ -109,13 +109,11 @@ Notices.prototype.saveNotice = function(e) {
         title: this.noticeTitleInput.value,
         date: this.noticeDateInput.value,
         time: this.noticeTimeInput.value,
+        date_time_posted: Date(),
         description: this.noticeDescInput.value
       }).then(function() {
-        // Clear message text field and SEND button state.
-        Notices.resetMaterialTextfield(this.noticeTitleInput);
-        Notices.resetMaterialTextfield(this.noticeDateInput);
-        Notices.resetMaterialTextfield(this.noticeTimeInput);
-        Notices.resetMaterialTextfield(this.noticeDescInput);
+        // Clear form fields
+        this.noticeForm.reset();
         this.toggleButton();
       }.bind(this)).catch(function(error) {
         console.error('Error writing new message to Firebase Database', error);
@@ -243,12 +241,13 @@ Notices.NOTICE_IMG_TEMPLATE =
 Notices.NOTICE_TEMPLATE =
     '<div class="card blue lighten-1">' +
       '<div class="card-content white-text">' +
-        '<span class="card-title">Party!</span>' +
-        '<p class="notice-description">Let\'s have fun!</p>' +
-        '<p class="notice-time">Let\'s have fun!</p>' +
-        '<p class="notice-date">Let\'s have fun!</p>' +
+        '<span class="card-title"></span>' +
+        '<p class="notice-description"></p></br>' +
+        '</div>' +
+        '<div class="card-action"><a href="#" class="name"></a>' +
+        '<p><span class="notice-time"></span> GMT | ' +
+        '<span class="notice-date"></span></p>' + 
       '</div>' +
-      '<div class="card-action"><a href="#" class="name"></a></div>' +
     '</div>';
 
 // A loading image URL.
@@ -267,16 +266,20 @@ Notices.prototype.displayNotice = function(key, name, title, date, time, descrip
     //noticeFirstList noticeSecondList noticeThirdList
     switch (this.noticeCount % 3){
       case 0:
-        this.noticeFirstList.appendChild(div);
+        this.noticeFirstList.insertBefore(div, this.noticeFirstList.firstChild);
+        // this.noticeFirstList.appendChild(div);
         break;
       case 1:
-        this.noticeSecondList.appendChild(div);
+        this.noticeSecondList.insertBefore(div, this.noticeSecondList.firstChild);
+        // this.noticeSecondList.appendChild(div);
         break;
       case 2:
-        this.noticeThirdList.appendChild(div);
+        this.noticeThirdList.insertBefore(div, this.noticeThirdList.firstChild);
+        // this.noticeThirdList.appendChild(div);
         break;
       default:
-        this.noticeFirstList.appendChild(div);
+        this.noticeFirstList.insertBefore(div, this.noticeFirstList.firstChild);
+        // this.noticeFirstList.appendChild(div);
     }
   }
   // if (picUrl) {
@@ -296,7 +299,8 @@ Notices.prototype.displayNotice = function(key, name, title, date, time, descrip
     }
     if (date){
     // Replace all line breaks by <br>.
-      noticeDateStamp.textContent = date;
+      var duedate = new Date(date);
+      noticeDateStamp.textContent = duedate.getDay() + '/' + duedate.getMonth() + '/' + duedate.getFullYear();
     }
     if (time){
     // Replace all line breaks by <br>.
