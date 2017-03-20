@@ -17,339 +17,354 @@
 
 // Initializes Notices.
 function Notices() {
-  this.checkSetup();
+	this.checkSetup();
 
-  //count of notices displayed
-  this.noticeCount = 0;
+	//count of notices displayed
+	this.noticeCount = 0;
 
 
-  // Shortcuts to DOM Elements.
-  this.noticeFirstList = document.getElementById('notice-col-1');
-  this.noticeSecondList = document.getElementById('notice-col-2');
-  this.noticeThirdList = document.getElementById('notice-col-3');
-  this.noticeForm = document.getElementById('notice-form');
+	// Shortcuts to DOM Elements.
+	this.noticeFirstList = document.getElementById('notice-col-1');
+	this.noticeSecondList = document.getElementById('notice-col-2');
+	this.noticeThirdList = document.getElementById('notice-col-3');
+	this.noticeForm = document.getElementById('notice-form');
 
-  // notice form inputs
-  this.noticeTitleInput = document.getElementById('notice-title');
-  this.noticeDateInput = document.getElementById('notice-date');
-  this.noticeTimeInput = document.getElementById('notice-time');
-  this.noticeDescInput = document.getElementById('notice-description');
-  
-  this.submitButton = document.getElementById('submit');
-  // this.submitImageButton = document.getElementById('submitImage');
-  this.imageForm = document.getElementById('image-form');
-  this.mediaCapture = document.getElementById('mediaCapture');
-  this.userPic = document.getElementById('user-pic');
-  this.userName = document.getElementById('user-name');
-  this.signInButton = document.getElementById('sign-in');
-  this.signOutButton = document.getElementById('sign-out');
-  // this.signInSnackbar = document.getElementById('must-signin-snackbar');
+	// notice form inputs
+	this.noticeTitleInput = document.getElementById('notice-title');
+	this.noticeDateInput = document.getElementById('notice-date');
+	this.noticeTimeInput = document.getElementById('notice-time');
+	this.noticeDescInput = document.getElementById('notice-description');
+	
+	this.submitButton = document.getElementById('submit');
+	// this.submitImageButton = document.getElementById('submitImage');
+	this.imageForm = document.getElementById('image-form');
+	this.mediaCapture = document.getElementById('mediaCapture');
+	this.userPic = document.getElementById('user-pic');
+	this.userName = document.getElementById('user-name');
+	this.signInButton = document.getElementById('sign-in');
+	this.signOutButton = document.getElementById('sign-out');
+	this.registerButton = document.getElementById('register');
+	// this.signInSnackbar = document.getElementById('must-signin-snackbar');
 
-  // Saves message on form submit.
-  this.noticeForm.addEventListener('submit', this.saveNotice.bind(this));
-  this.signOutButton.addEventListener('click', this.signOut.bind(this));
-  this.signInButton.addEventListener('click', this.signIn.bind(this));
+	// Saves message on form submit.
+	this.noticeForm.addEventListener('submit', this.saveNotice.bind(this));
+	this.signOutButton.addEventListener('click', this.signOut.bind(this));
+	this.signInButton.addEventListener('click', this.signIn.bind(this));
+	this.registerButton.addEventListener('click', this.register.bind(this));
 
-  // Toggle for the button.
-  var buttonTogglingHandler = this.toggleButton.bind(this);
-  this.noticeTitleInput.addEventListener('keyup', buttonTogglingHandler);
-  this.noticeTitleInput.addEventListener('change', buttonTogglingHandler);
-  this.noticeDescInput.addEventListener('keyup', buttonTogglingHandler);
-  this.noticeDescInput.addEventListener('change', buttonTogglingHandler);
+	// Toggle for the button.
+	var buttonTogglingHandler = this.toggleButton.bind(this);
+	this.noticeTitleInput.addEventListener('keyup', buttonTogglingHandler);
+	this.noticeTitleInput.addEventListener('change', buttonTogglingHandler);
+	this.noticeDescInput.addEventListener('keyup', buttonTogglingHandler);
+	this.noticeDescInput.addEventListener('change', buttonTogglingHandler);
 
-  // Events for image upload.
-  // this.submitImageButton.addEventListener('click', function() {
-  //   this.mediaCapture.click();
-  // }.bind(this));
-  // this.mediaCapture.addEventListener('change', this.saveImageNotice.bind(this));
+	// Events for image upload.
+	// this.submitImageButton.addEventListener('click', function() {
+	//   this.mediaCapture.click();
+	// }.bind(this));
+	// this.mediaCapture.addEventListener('change', this.saveImageNotice.bind(this));
 
-  this.initFirebase();
+	this.initFirebase();
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
 Notices.prototype.initFirebase = function() {
-  // TODO(DEVELOPER): Initialize Firebase.
-  this.auth = firebase.auth();
-  this.database = firebase.database();
-  this.storage = firebase.storage();
-  // Initiates Firebase auth and listen to auth state changes.
-  this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
+	// TODO(DEVELOPER): Initialize Firebase.
+	this.auth = firebase.auth();
+	this.database = firebase.database();
+	this.storage = firebase.storage();
+	// Initiates Firebase auth and listen to auth state changes.
+	this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
+
+	// We load currently existing chant notices.
+	this.loadNotices();
 };
 
 // Loads notices history and listens for upcoming ones.
 Notices.prototype.loadNotices = function() {
-  // TODO(DEVELOPER): Load and listens for new notices.
-  this.noticesRef = this.database.ref('notices');
-  // Make sure we remove all previous listeners.
-  this.noticesRef.off();
+	// TODO(DEVELOPER): Load and listens for new notices.
+	this.noticesRef = this.database.ref('notices');
+	// Make sure we remove all previous listeners.
+	this.noticesRef.off();
 
-  // Loads the last 12 notices and listen for new ones.
-  var setNotices = function(data) {
-    var val = data.val();
-    this.displayNotice(data.key, val.name, val.title, val.date, val.time, val.description);
-  }.bind(this);
-  this.noticesRef.limitToLast(12).on('child_added', setNotices);
-  this.noticesRef.limitToLast(12).on('child_changed', setNotices);
+	// Loads the last 12 notices and listen for new ones.
+	var setNotices = function(data) {
+	var val = data.val();
+	this.displayNotice(data.key, val.name, val.title, val.date, val.time, val.description);
+	}.bind(this);
+	this.noticesRef.limitToLast(12).on('child_added', setNotices);
+	this.noticesRef.limitToLast(12).on('child_changed', setNotices);
 };
 
 // Saves a new message on the Firebase DB.
 Notices.prototype.saveNotice = function(e) {
-  e.preventDefault();
-  // Check that the user entered a message and is signed in.
-  if (this.checkSignedInWithNotice()) {
-    if (this.noticeTitleInput.value && this.noticeDescInput.value) {
+	e.preventDefault();
+	// Check that the user entered a message and is signed in.
+	if (this.checkSignedInWithNotice()) {
+	if (this.noticeTitleInput.value && this.noticeDescInput.value) {
 
-      // TODO(DEVELOPER): push new message to Firebase.
-      var currentUser = this.auth.currentUser;
-      // Add a new message entry to the Firebase Database.
+		// TODO(DEVELOPER): push new message to Firebase.
+		var currentUser = this.auth.currentUser;
+		// Add a new message entry to the Firebase Database.
 
-      //Add time of "post"
-      this.noticesRef.push({
-        name: currentUser.displayName,
-        title: this.noticeTitleInput.value,
-        date: this.noticeDateInput.value,
-        time: this.noticeTimeInput.value,
-        date_time_posted: Date(),
-        description: this.noticeDescInput.value
-      }).then(function() {
-        // Clear form fields
-        this.noticeForm.reset();
-        this.toggleButton();
-      }.bind(this)).catch(function(error) {
-        console.error('Error writing new message to Firebase Database', error);
-      });
+		//Add time of "post"
+		this.noticesRef.push({
+		name: currentUser.displayName,
+		title: this.noticeTitleInput.value,
+		date: this.noticeDateInput.value,
+		time: this.noticeTimeInput.value,
+		date_time_posted: Date(),
+		description: this.noticeDescInput.value
+		}).then(function() {
+		// Clear form fields
+		this.noticeForm.reset();
+		this.toggleButton();
+		}.bind(this)).catch(function(error) {
+		console.error('Error writing new message to Firebase Database', error);
+		});
 
-    }
-  }
-  
+	}
+	}
+	
 };
 
 // Sets the URL of the given img element with the URL of the image stored in Firebase Storage.
 Notices.prototype.setImageUrl = function(imageUri, imgElement) {
-  imgElement.src = imageUri;
+	imgElement.src = imageUri;
 
-  // TODO(DEVELOPER): If image is on Firebase Storage, fetch image URL and set img element's src.
+	// TODO(DEVELOPER): If image is on Firebase Storage, fetch image URL and set img element's src.
 };
 
 // Saves a new message containing an image URI in Firebase.
 // This first saves the image in Firebase storage.
 Notices.prototype.saveImageMessage = function(event) {
-  var file = event.target.files[0];
+	var file = event.target.files[0];
 
-  // Clear the selection in the file picker input.
-  this.imageForm.reset();
+	// Clear the selection in the file picker input.
+	this.imageForm.reset();
 
-  // Check if the file is an image.
-  if (!file.type.match('image.*')) {
-    var data = {
-      message: 'You can only share images',
-      timeout: 2000
-    };
-    this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
-    return;
-  }
-  // Check if the user is signed-in
-  if (this.checkSignedInWithNotice()) {
+	// Check if the file is an image.
+	if (!file.type.match('image.*')) {
+	var data = {
+		message: 'You can only share images',
+		timeout: 2000
+	};
+	this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+	return;
+	}
+	// Check if the user is signed-in
+	if (this.checkSignedInWithNotice()) {
 
-    // TODO(DEVELOPER): Upload image to Firebase storage and add message.
+	// TODO(DEVELOPER): Upload image to Firebase storage and add message.
 
-  }
+	}
+};
+
+//Opens the register modal
+Notices.prototype.showRegisterModal = function() {
+
+};
+
+//Register a new user
+Notices.prototype.register = function() {
+
 };
 
 // Signs-in Friendly Chat.
 Notices.prototype.signIn = function() {
-  // TODO(DEVELOPER): Sign in Firebase with credential from the Google user.
-  var provider = new firebase.auth.GoogleAuthProvider();
-  this.auth.signInWithPopup(provider);
+	// TODO(DEVELOPER): Sign in Firebase with credential from the Google user.
+	var provider = new firebase.auth.GoogleAuthProvider();
+	this.auth.signInWithPopup(provider);
 };
 
 // Signs-out of Friendly Chat.
 Notices.prototype.signOut = function() {
-  // TODO(DEVELOPER): Sign out of Firebase.
-  this.auth.signOut();
+	// TODO(DEVELOPER): Sign out of Firebase.
+	this.auth.signOut();
 };
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 Notices.prototype.onAuthStateChanged = function(user) {
-  if (user) { // User is signed in!
-    // Get profile pic and user's name from the Firebase user object.
-    var profilePicUrl = user.photoURL; // Only change these two lines!
-    var userName = user.displayName;   // Only change these two lines!
+	if (user) { // User is signed in!
+	// Get profile pic and user's name from the Firebase user object.
+	var profilePicUrl = user.photoURL; // Only change these two lines!
+	var userName = user.displayName;   // Only change these two lines!
 
-    // Set the user's profile pic and name.
-    this.userPic.style.backgroundImage = 'url(' + profilePicUrl + ')';
-    this.userName.textContent = userName;
+	// Set the user's profile pic and name.
+	this.userPic.style.backgroundImage = 'url(' + profilePicUrl + ')';
+	this.userName.textContent = userName;
 
-    // Show user's profile and sign-out button.
-    this.userName.removeAttribute('hidden');
-    this.userPic.removeAttribute('hidden');
-    this.signOutButton.removeAttribute('hidden');
+	// Show user's profile and sign-out button.
+	this.userName.removeAttribute('hidden');
+	this.userPic.removeAttribute('hidden');
+	this.signOutButton.removeAttribute('hidden');
 
-    // Hide sign-in button.
-    this.signInButton.setAttribute('hidden', 'true');
+	// Hide sign-in and register button.
+	this.signInButton.setAttribute('hidden', 'true');
+	this.registerButton.setAttribute('hidden', 'true');
 
-    // We load currently existing chant notices.
-     this.loadNotices();
-  } else { // User is signed out!
-    // Hide user's profile and sign-out button.
-    this.userName.setAttribute('hidden', 'true');
-    this.userPic.setAttribute('hidden', 'true');
-    this.signOutButton.setAttribute('hidden', 'true');
+	} else { // User is signed out!
+	// Hide user's profile and sign-out button.
+	this.userName.setAttribute('hidden', 'true');
+	this.userPic.setAttribute('hidden', 'true');
+	this.signOutButton.setAttribute('hidden', 'true');
 
-    // Show sign-in button.
-    this.signInButton.removeAttribute('hidden');
-    console.log("reveal sign in button");
-  }
+	// Show sign-in and register button.
+	this.signInButton.removeAttribute('hidden');
+	this.registerButton.removeAttribute('hidden');
+	console.log("Reveal sign-in and register button");
+	}
 };
 
 // Returns true if user is signed-in. Otherwise false and displays a message.
 Notices.prototype.checkSignedInWithNotice = function() {
-  /* TODO(DEVELOPER): Check if user is signed-in Firebase. */
-  if (this.auth.currentUser) {
-    return true;
-  }
-  // Display a message to the user using a Toast.
-  var data = {
-    message: 'You must sign-in first',
-    timeout: 2000
-  };
-  // this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
-  //add Materialisecss Toast
-  // Materialize.toast(message, displayLength, className, completeCallback);
-  Materialize.toast(data.message, data.timeout) // 4000 is the duration of the toast
-  return false;
+	/* TODO(DEVELOPER): Check if user is signed-in Firebase. */
+	if (this.auth.currentUser) {
+	return true;
+	}
+	// Display a message to the user using a Toast.
+	var data = {
+	message: 'You must sign-in first',
+	timeout: 2000
+	};
+	// this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+	//add Materialisecss Toast
+	// Materialize.toast(message, displayLength, className, completeCallback);
+	Materialize.toast(data.message, data.timeout); // 4000 is the duration of the toast
+	return false;
 };
 
 // Resets the given MaterialTextField.
 Notices.resetMaterialTextfield = function(element) {
-  element.value = '';
-  element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+	element.value = '';
+	element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 };
 
 // Template for notices with images.
 Notices.NOTICE_IMG_TEMPLATE =
-    '<div class="card #42a5f5 blue lighten-1">' +
-      '<div class="card-image"><img class="activator" src="./images/school.jpg"></div>' +
-      '<div class="card-content white-text">' +
-        '<span class="card-title">Party!</span>' +
-        '<p class="notice-description">Let\'s have fun!</p>' +
-      '</div>' +
-      '<div class="card-action white-text"><span class="notice-date"></span><span class="notice-time"></span></div>' +
-    '</div>';
+	'<div class="card #42a5f5 blue lighten-1">' +
+		'<div class="card-image"><img class="activator" src="./images/school.jpg"></div>' +
+		'<div class="card-content white-text">' +
+		'<span class="card-title">Party!</span>' +
+		'<p class="notice-description">Let\'s have fun!</p>' +
+		'</div>' +
+		'<div class="card-action white-text"><span class="notice-date"></span><span class="notice-time"></span></div>' +
+	'</div>';
 
 // Template for notices without images.
 Notices.NOTICE_TEMPLATE =
-    '<div class="card blue lighten-1">' +
-      '<div class="card-content white-text">' +
-        '<span class="card-title"></span>' +
-        '<p class="notice-description"></p></br>' +
-        '</div>' +
-        '<div class="card-action"><a href="#" class="name"></a>' +
-        '<p><span class="notice-time"></span> GMT | ' +
-        '<span class="notice-date"></span></p>' + 
-      '</div>' +
-    '</div>';
+	'<div class="card blue lighten-1">' +
+		'<div class="card-content white-text">' +
+		'<span class="card-title"></span>' +
+		'<p class="notice-description"></p></br>' +
+		'</div>' +
+		'<div class="card-action"><a href="#" class="name"></a>' +
+		'<p><span class="notice-time"></span> GMT | ' +
+		'<span class="notice-date"></span></p>' + 
+		'</div>' +
+	'</div>';
 
 // A loading image URL.
 Notices.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 // Displays a Message in the UI.
 Notices.prototype.displayNotice = function(key, name, title, date, time, description) {
-  var div = document.getElementById(key);
-  // If an element for that message does not exists yet we create it.
-  if (!div) {
-    var container = document.createElement('div');
-    container.innerHTML = Notices.NOTICE_TEMPLATE;
-    div = container.firstChild;
-    div.setAttribute('id', key);
-    //tricky algorithm part with 3 columns 
-    //noticeFirstList noticeSecondList noticeThirdList
-    switch (this.noticeCount % 3){
-      case 0:
-        this.noticeFirstList.insertBefore(div, this.noticeFirstList.firstChild);
-        // this.noticeFirstList.appendChild(div);
-        break;
-      case 1:
-        this.noticeSecondList.insertBefore(div, this.noticeSecondList.firstChild);
-        // this.noticeSecondList.appendChild(div);
-        break;
-      case 2:
-        this.noticeThirdList.insertBefore(div, this.noticeThirdList.firstChild);
-        // this.noticeThirdList.appendChild(div);
-        break;
-      default:
-        this.noticeFirstList.insertBefore(div, this.noticeFirstList.firstChild);
-        // this.noticeFirstList.appendChild(div);
-    }
-  }
-  // if (picUrl) {
-  //   div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
-  // }
-  // div.querySelector('.name').textContent = name;
-  var noticeTitle = div.querySelector('.card-title');
-  if (title) { // If the title is provided.
-    noticeTitle.textContent = title;
-    var noticeDescription = div.querySelector('.notice-description');
-    var noticeDateStamp = div.querySelector('.notice-date');
-    var noticeTimeStamp = div.querySelector('.notice-time');
-    if (description){
-    // Replace all line breaks by <br>.
-      noticeDescription.textContent = description;
-      noticeDescription.innerHTML = noticeDescription.innerHTML.replace(/\n/g, '<br>');
-    }
-    if (date){
-    // Replace all line breaks by <br>.
-      var duedate = new Date(date);
-      noticeDateStamp.textContent = duedate.getDay() + '/' + duedate.getMonth() + '/' + duedate.getFullYear();
-    }
-    if (time){
-    // Replace all line breaks by <br>.
-      noticeTimeStamp.textContent = time;
-    }
-    
-    
-  } else if (imageUri) { // If the message is an image.
-    // var image = document.createElement('img');
-    // image.addEventListener('load', function() {
-    //   this.noticeList.scrollTop = this.noticeList.scrollHeight;
-    // }.bind(this));
-    // this.setImageUrl(imageUri, image);
-    // messageElement.innerHTML = '';
-    // messageElement.appendChild(image);
-  }
-  // Show the card fading-in.
-  setTimeout(function() {div.classList.add('visible')}, 1);
-  // this.noticeList.scrollTop = this.noticeList.scrollHeight;
-  // this.noticeInput.focus();
-  this.noticeCount = this.noticeCount + 1;
-  // alert(this.noticeCount);
+	var div = document.getElementById(key);
+	// If an element for that message does not exists yet we create it.
+	if (!div) {
+	var container = document.createElement('div');
+	container.innerHTML = Notices.NOTICE_TEMPLATE;
+	div = container.firstChild;
+	div.setAttribute('id', key);
+	//tricky algorithm part with 3 columns 
+	//noticeFirstList noticeSecondList noticeThirdList
+	switch (this.noticeCount % 3){
+		case 0:
+		this.noticeFirstList.insertBefore(div, this.noticeFirstList.firstChild);
+		// this.noticeFirstList.appendChild(div);
+		break;
+		case 1:
+		this.noticeSecondList.insertBefore(div, this.noticeSecondList.firstChild);
+		// this.noticeSecondList.appendChild(div);
+		break;
+		case 2:
+		this.noticeThirdList.insertBefore(div, this.noticeThirdList.firstChild);
+		// this.noticeThirdList.appendChild(div);
+		break;
+		default:
+		this.noticeFirstList.insertBefore(div, this.noticeFirstList.firstChild);
+		// this.noticeFirstList.appendChild(div);
+	}
+	}
+	// if (picUrl) {
+	//   div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
+	// }
+	// div.querySelector('.name').textContent = name;
+	var noticeTitle = div.querySelector('.card-title');
+	if (title) { // If the title is provided.
+	noticeTitle.textContent = title;
+	var noticeDescription = div.querySelector('.notice-description');
+	var noticeDateStamp = div.querySelector('.notice-date');
+	var noticeTimeStamp = div.querySelector('.notice-time');
+	if (description){
+	// Replace all line breaks by <br>.
+		noticeDescription.textContent = description;
+		noticeDescription.innerHTML = noticeDescription.innerHTML.replace(/\n/g, '<br>');
+	}
+	if (date){
+	// Replace all line breaks by <br>.
+		var duedate = new Date(date);
+		noticeDateStamp.textContent = duedate.getDay() + '/' + duedate.getMonth() + '/' + duedate.getFullYear();
+	}
+	if (time){
+	// Replace all line breaks by <br>.
+		noticeTimeStamp.textContent = time;
+	}
+	
+	
+	} else if (imageUri) { // If the message is an image.
+	// var image = document.createElement('img');
+	// image.addEventListener('load', function() {
+	//   this.noticeList.scrollTop = this.noticeList.scrollHeight;
+	// }.bind(this));
+	// this.setImageUrl(imageUri, image);
+	// messageElement.innerHTML = '';
+	// messageElement.appendChild(image);
+	}
+	// Show the card fading-in.
+	setTimeout(function() {div.classList.add('visible')}, 1);
+	// this.noticeList.scrollTop = this.noticeList.scrollHeight;
+	// this.noticeInput.focus();
+	this.noticeCount = this.noticeCount + 1;
+	// alert(this.noticeCount);
 };
 
 // Enables or disables the submit button depending on the values of the input
 // fields.
 Notices.prototype.toggleButton = function() {
-  if (this.noticeTitleInput.value || this.noticeDescInput.value) {
-    this.submitButton.removeAttribute('disabled');
-  } else {
-    this.submitButton.setAttribute('disabled', 'true');
-  }
+	if (this.noticeTitleInput.value || this.noticeDescInput.value) {
+	this.submitButton.removeAttribute('disabled');
+	} else {
+	this.submitButton.setAttribute('disabled', 'true');
+	}
 };
 
 // Checks that the Firebase SDK has been correctly setup and configured.
 Notices.prototype.checkSetup = function() {
-  if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
-    window.alert('You have not configured and imported the Firebase SDK. ' +
-        'Make sure you go through the codelab setup instructions.');
-  } else if (config.storageBucket === '') {
-    window.alert('Your Firebase Storage bucket has not been enabled. Sorry about that. This is ' +
-        'actually a Firebase bug that occurs rarely. ' +
-        'Please go and re-generate the Firebase initialisation snippet (step 4 of the codelab) ' +
-        'and make sure the storageBucket attribute is not empty. ' +
-        'You may also need to visit the Storage tab and paste the name of your bucket which is ' +
-        'displayed there.');
-  }
+	if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
+	window.alert('You have not configured and imported the Firebase SDK. ' +
+		'Make sure you go through the codelab setup instructions.');
+	} else if (config.storageBucket === '') {
+	window.alert('Your Firebase Storage bucket has not been enabled. Sorry about that. This is ' +
+		'actually a Firebase bug that occurs rarely. ' +
+		'Please go and re-generate the Firebase initialisation snippet (step 4 of the codelab) ' +
+		'and make sure the storageBucket attribute is not empty. ' +
+		'You may also need to visit the Storage tab and paste the name of your bucket which is ' +
+		'displayed there.');
+	}
 };
 
 window.onload = function() {
-  window.notices = new Notices();
+	window.notices = new Notices();
 };
