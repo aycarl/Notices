@@ -102,29 +102,29 @@ Notices.prototype.saveNotice = function(e) {
 	e.preventDefault();
 	// Check that the user entered a message and is signed in.
 	if (this.checkSignedInWithNotice()) {
-	if (this.noticeTitleInput.value && this.noticeDescInput.value) {
+		if (this.noticeTitleInput.value && this.noticeDescInput.value) {
 
-		// TODO(DEVELOPER): push new message to Firebase.
-		var currentUser = this.auth.currentUser;
-		// Add a new message entry to the Firebase Database.
+			// TODO(DEVELOPER): push new message to Firebase.
+			var currentUser = this.auth.currentUser;
+			// Add a new message entry to the Firebase Database.
 
-		//Add time of "post"
-		this.noticesRef.push({
-		name: currentUser.displayName,
-		title: this.noticeTitleInput.value,
-		date: this.noticeDateInput.value,
-		time: this.noticeTimeInput.value,
-		date_time_posted: Date(),
-		description: this.noticeDescInput.value
-		}).then(function() {
-		// Clear form fields
-		this.noticeForm.reset();
-		this.toggleButton();
-		}.bind(this)).catch(function(error) {
-		console.error('Error writing new message to Firebase Database', error);
-		});
+			//Add time of "post"
+			this.noticesRef.push({
+			name: currentUser.displayName,
+			title: this.noticeTitleInput.value,
+			date: this.noticeDateInput.value,
+			time: this.noticeTimeInput.value,
+			date_time_posted: Date(),
+			description: this.noticeDescInput.value
+			}).then(function() {
+			// Clear form fields
+			this.noticeForm.reset();
+			this.toggleButton();
+			}.bind(this)).catch(function(error) {
+			console.error('Error writing new message to Firebase Database', error);
+			});
 
-	}
+		}
 	}
 	
 };
@@ -169,6 +169,9 @@ Notices.prototype.showRegisterModal = function() {
 //Register a new user
 Notices.prototype.register = function() {
 
+
+	//Check if all the fields are valid and create the user
+	// this.auth.createUserWithEmailAndPassword(email, password).then(function() {}.bind(this));
 };
 
 // Signs-in Friendly Chat.
@@ -221,12 +224,12 @@ Notices.prototype.onAuthStateChanged = function(user) {
 Notices.prototype.checkSignedInWithNotice = function() {
 	/* TODO(DEVELOPER): Check if user is signed-in Firebase. */
 	if (this.auth.currentUser) {
-	return true;
+		return true;
 	}
 	// Display a message to the user using a Toast.
 	var data = {
-	message: 'You must sign-in first',
-	timeout: 2000
+		message: 'You must sign-in first',
+		timeout: 2000
 	};
 	// this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
 	//add Materialisecss Toast

@@ -37,14 +37,14 @@
             <li><a hidden id="user-pic"></a></li>
             <li><a hidden id="user-name">Components</a></li>
             <li><a hidden id="sign-out">Sign-out</a></li>
-            <li><a hidden id="register">Register</a></li>
+            <li><a hidden id="register" href="#register">Register</a></li>
             <li><a hidden id="sign-in"><i class="material-icons left">account_circle</i>Sign-in with Google</a></li> <!--  -->
           </ul>
           <ul id="mobile-demo" class="side-nav">
             <li><a hidden id="user-pic"></a></li>
             <li><a hidden id="user-name">Components</a></li>
             <li><a hidden id="sign-out">Sign-out</a></li>
-            <li><a hidden id="register">Register</a></li>
+            <li><a hidden id="register" href="#register">Register</a></li>
             <li><a hidden id="sign-in"><i class="material-icons left">account_circle</i>Sign-in with Google</a></li> <!--  -->
           </ul>
       </nav>
@@ -54,51 +54,13 @@
           <!-- to be populated by notices -->
           <div class="row">
               <div id="notice-col-1" class="col s12 m4">
-                  <!-- <div class="card #42a5f5 blue lighten-1">
-                      <div class="card-content white-text">
-                        <span class="card-title">Party!</span>
-                        <p>Let's have fun! I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                      </div>
-                  </div>  -->
-                  <!-- ends the card info -->
-                  <!-- <div class="card #42a5f5 blue lighten-1">
-                      <div class="card-image">
-                        <img class="activator"  src="./images/school.jpg">
-                      </div>
-                      <div class="card-content white-text">
-                        <span class="card-title activator">Card Title<i class="material-icons right">more_vert</i></span>
-                        <p>Let's have fun!</p>
-                      </div>
-                      <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                      </div>
-                  </div>  -->
-                  <!-- ends the card info -->
+                  
               </div>
               <div id="notice-col-2" class="col s12 m4">
-                  <!-- <div class="card #42a5f5 blue lighten-1">
-                      <div class="card-image">
-                        <img class="activator"  src="./images/Ashesi DLab Maker Skills Sessions - DJ Mixes and Mashups-01.jpg"> -->
-                        <!-- <span class="card-title">Card Title</span> -->
-                      <!-- </div>
-                      <div class="card-content white-text">
-                        <span class="card-title">Party!</span>
-                        <p>Let's have fun!</p>
-                      </div>
-                  </div> -->
+                  
               </div>
               <div id="notice-col-3" class="col s12 m4">
-                  <!-- <div class="card #42a5f5 blue lighten-1">
-                      <div class="card-image">
-                        <img class="activator"  src="./images/flower.gif"> -->
-                        <!-- <span class="card-title">Card Title</span> -->
-                      <!-- </div>
-                      <div class="card-content white-text">
-                        <span class="card-title">Party!</span>
-                        <p>Let's have fun!</p>
-                      </div>
-                  </div> -->
+                
               </div>
           </div>
           <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 45px;">
@@ -116,7 +78,7 @@
                       <div class="row">
                           <div class="input-field col s12">
                             <input id="notice-title" type="text" class="validate">
-                            <label for="first_notice-titlename">Title</label>
+                            <label for="notice-title">Title</label>
                           </div>
                       </div>
                       <div class="row">
@@ -154,6 +116,52 @@
                           </div>
                       </div> -->
                       <input id="submit" type="submit" value="Add" class="modal-action modal-close waves-effect waves-light btn" style="float: right; right: 12px" />
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="modal-footer">
+              <span>Change a life today!</span>
+            </div> -->
+          </div>
+          <!-- register modal -->
+          <div id="register" class="modal modal-fixed-footer">
+            <div class="modal-content">
+              <div class="row">
+                  <div class="col s12 m12">
+                  <form id="registration-form" class="form-auth col s12"">
+                      <h4>Create an Admin Account</h4>
+                      <p hidden="true" class="text-warning">{{error_message}}</p>
+                      <!-- <p class="login-status" ng-show="authenticated">Sign in {{message}}</p> -->
+                      <div class="row">
+                          <div class="input-field col s6">
+                            <input id="first-name" type="text" class="validate">
+                            <label for="first-name">First Name</label>
+                          </div>
+                          <div class="input-field col s6">
+                            <input id="last-name" type="text" class="validate">
+                            <label for="last-name">Last Name</label>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col s12">
+                            <input id="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col s12">
+                            <input id="email" type="email" class="validate">
+                            <label for="email">Ashesi Email</label>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col s12">
+                            <input id="tel-contact" type="number" class="validate">
+                            <label for="tel-contact">Contact Number</label>
+                          </div>
+                      </div>
+                      <input id="submit" type="submit" value="register" class="modal-action modal-close waves-effect waves-light btn" style="float: right; right: 12px" />
                   </form>
                 </div>
               </div>
