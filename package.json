@@ -19,8 +19,8 @@
     "nodemon": "^1.9.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "serve-favicon": "~2.3.0",
-    "passport-local-mongoose": "^1.0.0"
+    "passport-local-mongoose": "^1.0.0",
+    "serve-favicon": "~2.3.0"
   },
   "description": "A virtual notice board for college students",
   "main": "app.js",
@@ -29,5 +29,6 @@
   "bugs": {
     "url": "https://github.com/yao-carl/Notices/issues"
   },
-  "homepage": "https://github.com/yao-carl/Notices#readme"
+  "homepage": "https://github.com/yao-carl/Notices#readme",
+  "repository": "https://github.com/aycarl/Notices.git"
 }
