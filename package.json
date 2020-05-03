@@ -13,5 +13,6 @@
   "bugs": {
     "url": "https://github.com/yao-carl/Notices/issues"
   },
-  "homepage": "https://github.com/yao-carl/Notices#readme"
+  "homepage": "https://github.com/yao-carl/Notices#readme",
+  "repository": "https://github.com/aycarl/Notices.git"
 }
