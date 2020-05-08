@@ -1,14 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class MyProfile extends Component{
-  constructor(props){
-    super();
-    this.state = {
-
-    }
-  }
-
-  render(){
+const MyProfile = () => {
     return(
       <div className="App">
         <header className="App-header">
@@ -16,7 +8,6 @@ class MyProfile extends Component{
         </header>
       </div>
     )
-  }
 }
 
 export default MyProfile
