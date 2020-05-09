@@ -4,7 +4,7 @@ const MyProfile = () => {
     return(
       <div className="App">
         <header className="App-header">
-          Notice
+          Profile
         </header>
       </div>
     )
