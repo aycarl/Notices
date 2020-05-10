@@ -4,14 +4,19 @@ import 'firebase/auth'
 
 
 const config = {
-  apiKey: "AIzaSyAHHshoj3i_CvI9EZnd_iUmYhmvyv8x_p4",
-  authDomain: "notice-d91bb.firebaseapp.com",
-  databaseURL: "https://notice-d91bb.firebaseio.com",
-  projectId: "notice-d91bb",
-  storageBucket: "notice-d91bb.appspot.com",
-  messagingSenderId: "226118271572",
-  appId: "1:226118271572:web:a32114bb87d13967b963c1"
+  apiKey: "AIzaSyBbMywh6LAfqvKuSEc7rnAelCpIvJJ9nKg",
+  authDomain: "notice-db.firebaseapp.com",
+  databaseURL: "https://notice-db.firebaseio.com",
+  projectId: "notice-db",
+  storageBucket: "notice-db.appspot.com",
+  messagingSenderId: "785859186736",
+  appId: "1:785859186736:web:cb0ddb82532fde6c9addf5",
+  measurementId: "G-0W1CCYPP8N"
 };
+
+export const createUserProfileDocument = async () => {
+
+}
 
 firebase.initializeApp(config);
 
