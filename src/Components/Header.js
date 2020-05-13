@@ -1,26 +1,40 @@
-import React from 'react'
+import React from "react";
+import Nav from "react-bootstrap/Nav";
 
-import { Link } from 'react-router-dom'
+import { auth } from "../firebase/firebase.utils";
 
-import { auth } from '../firebase/firebase.utils'
+import styles from "./../Assets/stylesheets/header.module.css";
 
-import styles from './../Assets/stylesheets/header.module.css'
-
-const Header = ({myUserName, currentUser}) => {
+const Header = ({ currentUser }) => {
   return (
-    <div className={styles.header}>
-      <div className={styles.options}>
-        <Link to='/'><div className={styles.option}>Home</div></Link>
-        <Link to='/'><div className={styles.option}>{myUserName}'s profile</div></Link>
-        <Link to='/about'><div className={styles.option}>About</div></Link>
-      {
-        currentUser ?
-        <div className={styles.option} onClick={() => auth.signOut() }>Sign Out</div>
-        :
-        <Link to="/signin" className={styles.option}>Sign In</Link>
-      }
-      </div>
-    </div>
+    <Nav className={`${styles.header} justify-content-center`} activeKey="/">
+      <Nav.Item className={styles.options}>
+        <Nav.Link href="/">Home</Nav.Link>
+      </Nav.Item>
+      <Nav.Item className={styles.options}>
+        <Nav.Link href="/" eventKey="link-profile">
+          Your profile
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item className={styles.options}>
+        <Nav.Link href="/about" eventKey="link-about">
+          About
+        </Nav.Link>
+      </Nav.Item>
+      {currentUser ? (
+        <Nav.Item className={styles.options}>
+          <Nav.Link onClick={() => auth.signOut()} eventKey="link-sign-out">
+            Sign Out
+          </Nav.Link>
+        </Nav.Item>
+      ) : (
+        <Nav.Item className={styles.options}>
+          <Nav.Link href="/signin" eventKey="link-sign-in">
+            Sign In
+          </Nav.Link>
+        </Nav.Item>
+      )}
+    </Nav>
   );
 };
 
