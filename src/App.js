@@ -51,11 +51,14 @@ class App extends React.Component {
   }
 
   render() {
+
+    const { currentUser } = this.state;
+
     return (
       <Router>
-        <Header myUserName="Carl" currentUser={this.state.currentUser} />
+        <Header myUserName="Carl" currentUser={currentUser} />
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" ><HomePage currentUser={currentUser} /></Route>
           <Route exact path="/about" component={About} />
           <Route exact path="/signin" render={() => this.state.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)}/>
           <Route path="/:userName" component={MyProfile} />

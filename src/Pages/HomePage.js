@@ -1,24 +1,29 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import Container from 'react-bootstrap/Container'
+import { Container, Button } from "react-bootstrap";
 
-import CardContainer from '../Components/cards/card-container'
+import CardContainer from "../Components/cards/card-container";
 
-class HomePage extends Component{
-  constructor(props){
-    super();
-    this.state = {
+import "../Assets/stylesheets/pages.modules.scss";
 
-    }
-  }
+class HomePage extends Component {
 
-  render(){
-    return(
-      <Container fluid >
-        <CardContainer/>
+  render() {
+    const { currentUser } = this.props;
+
+    return (
+      <Container fluid className="page">
+        {currentUser ? (
+          <Button className="addNoticeBtn" variant="primary" size="lg" block>
+            Add Notice
+          </Button>
+        ) : (
+          <div></div>
+        )}
+        <CardContainer />
       </Container>
-    )
+    );
   }
 }
 
-export default HomePage
+export default HomePage;
