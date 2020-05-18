@@ -25,7 +25,7 @@ const HomePage = (props) => {
       ) : (
         <div></div>
       )}
-      <NewNoticeModal show={modalShow} onHide={() => setModalShow(false)} />
+      <NewNoticeModal show={modalShow} onHide={() => setModalShow(false)}  currentUser={props.currentUser}/>
       <CardContainer />
     </Container>
   );
