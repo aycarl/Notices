@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { CardColumns, Card} from "react-bootstrap";
 
-//import Card from "./card";
+import NoticeCard from "./card";
 
 class CardContainer extends Component {
   render() {
@@ -94,6 +94,7 @@ class CardContainer extends Component {
             </Card.Text>
           </Card.Body>
         </Card>
+        <NoticeCard />
       </CardColumns>
     );
   }
