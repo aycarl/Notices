@@ -9,12 +9,13 @@ import "./new-notice-modal.styles.scss";
 const NewNoticeModal = (props) => {
   const [noticeTitle, setNoticeTitle] = useState("");
   const [noticeBody, setNoticeBody] = useState("");
+  const [ToggleDisabled, toggleDisabled] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     let timestamp = new Date();
-    
+
     let notice = {
       noticeId: timestamp.getTime().toString(),
       title: noticeTitle,
@@ -31,6 +32,10 @@ const NewNoticeModal = (props) => {
     setNoticeBody("");
     setNoticeTitle("");
   };
+
+  const handleChange = (event) => {
+    toggleDisabled(!ToggleDisabled);
+  }
 
   return (
     <Modal
@@ -53,6 +58,7 @@ const NewNoticeModal = (props) => {
               placeholder="Enter notice title"
               value={noticeTitle}
               onChange={(e) => setNoticeTitle(e.target.value)}
+              disabled={ToggleDisabled}
             />
           </Form.Group>
           <Form.Group controlId="formGroupNoticeBody">
@@ -68,6 +74,9 @@ const NewNoticeModal = (props) => {
           <Form.Group controlId="formGroupFileInput">
             <Form.Label>Image/Poster (optional)</Form.Label>
             <Form.File.Input />
+          </Form.Group>
+          <Form.Group controlId="formBasicCheckbox">
+            <Form.Check type="switch" label="is this a quote?" onChange={handleChange}/>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>

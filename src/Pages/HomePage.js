@@ -3,7 +3,7 @@ import React from "react";
 import { Container, Button } from "react-bootstrap";
 
 import CardContainer from "../Components/cards/card-container";
-import NewNoticeModal from "../Components/new-notice/new-notice-modal";
+import NewNoticeModal from "../Components/new-notice-modal/new-notice-modal";
 
 import "../Assets/stylesheets/pages.modules.scss";
 

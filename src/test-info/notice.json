@@ -1,0 +1,14 @@
+{
+  "notice": {
+    "id": 1,
+    "timestamp": 0,
+    "qoute-indicator": [true, false],
+    "title": "",
+    "body": "",
+    "quote-citing": "",
+    "quote-alignment": ["text-right", "text-center", "text-left"],
+    "dictionary-of-links": [{"link": "url"}],
+    "img": ""
+  }
+
+}

@@ -43,7 +43,7 @@ class CardContainer extends Component {
             <small className="text-muted">Last updated 3 mins ago</small>
           </Card.Footer>
         </Card>
-        <Card bg="warning" text="white" className="text-center p-3">
+        <Card bg="light" text="dark" className="text-center p-3">
           <blockquote className="blockquote mb-0 card-body">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
@@ -76,7 +76,7 @@ class CardContainer extends Component {
             </p>
             <footer className="blockquote-footer">
               <small className="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
+                Someone Infamous in <cite title="Source Title">Source Title</cite>
               </small>
             </footer>
           </blockquote>
