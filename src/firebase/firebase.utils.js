@@ -47,7 +47,7 @@ export const createNewNotice = async (notice, userAuth) => {
   const noticeSnapShot = await noticeRef.get();
 
   if (!noticeSnapShot.exists) {
-    const { title, body, noticeId } = notice;
+    const { title, body, noticeId, quoteCitation, quoteIndicator, quoteAlignment } = notice;
     const { displayName } = userAuth;
     const createdAt = new Date();
 
@@ -58,6 +58,9 @@ export const createNewNotice = async (notice, userAuth) => {
         noticeId,
         title,
         body,
+        quoteCitation,
+        quoteIndicator,
+        quoteAlignment
       });
 
       console.log("New Notice created!", noticeRef);

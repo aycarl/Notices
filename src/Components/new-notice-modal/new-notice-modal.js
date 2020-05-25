@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Col } from "react-bootstrap";
 
 import { createNewNotice } from "../../firebase/firebase.utils";
 
@@ -9,7 +9,9 @@ import "./new-notice-modal.styles.scss";
 const NewNoticeModal = (props) => {
   const [noticeTitle, setNoticeTitle] = useState("");
   const [noticeBody, setNoticeBody] = useState("");
-  const [ToggleDisabled, toggleDisabled] = useState("");
+  const [noticeQuoteCitation, setNoticeQuoteCitation] = useState("");
+  const [toggleDisabled, toggleDisabledIndicator] = useState("");
+  const [noticeQuoteAlignment, setNoticeQuoteAlignment] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,6 +22,9 @@ const NewNoticeModal = (props) => {
       noticeId: timestamp.getTime().toString(),
       title: noticeTitle,
       body: noticeBody,
+      quoteCitation: noticeQuoteCitation,
+      quoteIndicator: toggleDisabled,
+      quoteAlignment: noticeQuoteAlignment
     };
 
     try {
@@ -34,8 +39,8 @@ const NewNoticeModal = (props) => {
   };
 
   const handleChange = (event) => {
-    toggleDisabled(!ToggleDisabled);
-  }
+    toggleDisabledIndicator(!toggleDisabled);
+  };
 
   return (
     <Modal
@@ -55,10 +60,10 @@ const NewNoticeModal = (props) => {
             <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter notice title"
+              placeholder="Enter notice title (if not a quote)"
               value={noticeTitle}
               onChange={(e) => setNoticeTitle(e.target.value)}
-              disabled={ToggleDisabled}
+              disabled={toggleDisabled}
             />
           </Form.Group>
           <Form.Group controlId="formGroupNoticeBody">
@@ -66,18 +71,45 @@ const NewNoticeModal = (props) => {
             <Form.Control
               as="textarea"
               rows="3"
-              placeholder="Enter notice body (250 chars max)"
+              placeholder="Enter notice text/quote (250 chars max)"
               value={noticeBody}
               onChange={(e) => setNoticeBody(e.target.value)}
             />
           </Form.Group>
-          <Form.Group controlId="formGroupFileInput">
-            <Form.Label>Image/Poster (optional)</Form.Label>
-            <Form.File.Input />
-          </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check type="switch" label="is this a quote?" onChange={handleChange}/>
-          </Form.Group>
+          <Form.Row>
+            <Form.Group as={Col} controlId="formGroupFileInput">
+              <Form.Label>Image/Poster (optional)</Form.Label>
+              <Form.File.Input disabled={!toggleDisabled} />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formQuoteToggle">
+              <Form.Check
+                type="switch"
+                label="This is a quote."
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="formQuoteCitation">
+              <Form.Label>Quote Citation</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter citation (name, source, ...)"
+                value={noticeQuoteCitation}
+                onChange={(e) => setNoticeQuoteCitation(e.target.value)}
+                disabled={!toggleDisabled}
+              />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formQuoteAlignment">
+              <Form.Label>Quote Text Alignment</Form.Label>
+              <Form.Control as="select" disabled={!toggleDisabled} value={noticeQuoteAlignment}
+                onChange={(e) => setNoticeQuoteAlignment(e.target.value)}>
+                <option value="text-right" >Right Align</option>
+                <option value="text-left" >Left Align</option>
+                <option value="text-center" >Center Align</option>
+              </Form.Control>
+            </Form.Group>
+          </Form.Row>
         </Modal.Body>
         <Modal.Footer>
           <Button
