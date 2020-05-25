@@ -13,6 +13,7 @@ const config = {
   measurementId: "G-0W1CCYPP8N",
 };
 
+//This function creates a new user profile in the firestore database for user authentication 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -39,6 +40,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+//This function creates a new notice post in the firstore database
 export const createNewNotice = async (notice, userAuth) => {
   if (!userAuth) return;
 
@@ -69,6 +71,15 @@ export const createNewNotice = async (notice, userAuth) => {
   }
 
   return noticeRef;
+};
+
+//This function reads all notices from the firestore database
+export const readAllNotices = async () => {
+  const noticeBoardRef = firestore.collection("notices");
+
+  const noticeBoardSnapshot = await noticeBoardRef.get();
+  
+  return noticeBoardSnapshot;
 };
 
 firebase.initializeApp(config);
