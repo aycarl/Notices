@@ -1,16 +1,18 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 
 import { Modal, Button, Form, Col } from "react-bootstrap";
 
 import { createNewNotice } from "../../firebase/firebase.utils";
+import { addNotice } from "./../../redux/notices/notice.actions";
 
 import "./new-notice-modal.styles.scss";
 
-const NewNoticeModal = (props) => {
+const NewNoticeModal = ({ currentUser, addNotice, ...props }) => {
   const [noticeTitle, setNoticeTitle] = useState("");
   const [noticeBody, setNoticeBody] = useState("");
   const [noticeQuoteCitation, setNoticeQuoteCitation] = useState("");
-  const [toggleDisabled, toggleDisabledIndicator] = useState("");
+  const [toggleDisabled, toggleDisabledIndicator] = useState(false);
   const [noticeQuoteAlignment, setNoticeQuoteAlignment] = useState("");
 
   const handleSubmit = async (event) => {
@@ -28,7 +30,15 @@ const NewNoticeModal = (props) => {
     };
 
     try {
-      await createNewNotice(notice, props.currentUser);
+      const noticeRef = await createNewNotice(notice, currentUser);
+
+      noticeRef.onSnapshot((snapShot) =>
+        addNotice({
+          id: snapShot.id,
+          ...snapShot.data()
+        })
+      );
+
     } catch (error) {
       console.log("error message", error.message);
     }
@@ -79,7 +89,7 @@ const NewNoticeModal = (props) => {
           <Form.Row>
             <Form.Group as={Col} controlId="formGroupFileInput">
               <Form.Label>Image/Poster (optional)</Form.Label>
-              <Form.File.Input disabled={!toggleDisabled} />
+              <Form.File.Input />
             </Form.Group>
             <Form.Group as={Col} controlId="formQuoteToggle">
               <Form.Check
@@ -128,4 +138,8 @@ const NewNoticeModal = (props) => {
   );
 };
 
-export default NewNoticeModal;
+const matchDispatchToProps = dispatch => ({
+  addNotice: (notice) => dispatch(addNotice(notice))
+});
+
+export default connect(null, matchDispatchToProps)(NewNoticeModal);

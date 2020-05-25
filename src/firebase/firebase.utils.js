@@ -63,7 +63,6 @@ export const createNewNotice = async (notice, userAuth) => {
         quoteAlignment
       });
 
-      console.log("New Notice created!", noticeRef);
     } catch (error) {
       console.log("error creating new post", error.message);
     }
