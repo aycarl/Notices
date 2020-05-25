@@ -1,9 +1,13 @@
-import NoticeActionTypes from "./notice.types";
+import { NoticeActionTypes } from "./notice.types";
 
-export const deleteNotice = (Id) => {
+export const deleteNotice = Id => {
   return { type: NoticeActionTypes.DELETE_NOTICE, noticeId: Id };
 };
 
-export const toggleReadNotice = (Id) => {
+export const toggleReadNotice = Id => {
   return { type: NoticeActionTypes.TOGGLE_READ_NOTICE, noticeId: Id };
 };
+
+export const addNotice = notice => {
+  return {type: NoticeActionTypes.ADD_NOTICE, payload: notice};
+}

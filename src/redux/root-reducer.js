@@ -5,5 +5,5 @@ import noticeReducer from './notices/notice.reducer'
 
 export default combineReducers({
   user: userReducer,
-  notice: noticeReducer
+  noticeBoard: noticeReducer
 });

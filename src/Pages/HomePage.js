@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 
 import { Container, Button } from "react-bootstrap";
 
@@ -7,12 +8,12 @@ import NewNoticeModal from "../Components/new-notice-modal/new-notice-modal";
 
 import "../Assets/stylesheets/pages.modules.scss";
 
-const HomePage = (props) => {
+const HomePage = ({ currentUser }) => {
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
     <Container fluid className="page">
-      {props.currentUser ? (
+      {currentUser ? (
         <Button
           className="addNoticeBtn"
           variant="primary"
@@ -25,10 +26,14 @@ const HomePage = (props) => {
       ) : (
         <div></div>
       )}
-      <NewNoticeModal show={modalShow} onHide={() => setModalShow(false)}  currentUser={props.currentUser}/>
+      <NewNoticeModal show={modalShow} onHide={() => setModalShow(false)}  currentUser={currentUser}/>
       <CardContainer />
     </Container>
   );
 };
 
-export default HomePage;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser
+})
+
+export default connect(mapStateToProps)(HomePage);

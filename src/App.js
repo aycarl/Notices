@@ -50,11 +50,9 @@ class App extends React.Component {
 
     return (
       <Router>
-        <Header myUserName="Carl" />
+        <Header />
         <Switch>
-          <Route exact path="/">
-            <HomePage currentUser={currentUser} />
-          </Route>
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/about" component={About} />
           <Route
             exact

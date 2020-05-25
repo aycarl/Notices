@@ -19,10 +19,6 @@ const NoticeCard = ({ props }) => {
             build on the card title and make up the bulk of the card's content.
           </Card.Text>
         </Card.Body>
-        <Card.Body>
-          <Card.Link href="#">Card Link</Card.Link>
-          <Card.Link href="#">Another Link</Card.Link>
-        </Card.Body>
         <Card.Footer>
           <small className="text-muted">Last updated 3 mins ago</small>
         </Card.Footer>
