@@ -13,7 +13,7 @@ const config = {
   measurementId: "G-0W1CCYPP8N",
 };
 
-//This function creates a new user profile in the firestore database for user authentication 
+//This function creates a new user profile in the firestore database for user authentication
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -49,7 +49,14 @@ export const createNewNotice = async (notice, userAuth) => {
   const noticeSnapShot = await noticeRef.get();
 
   if (!noticeSnapShot.exists) {
-    const { title, body, noticeId, quoteCitation, quoteIndicator, quoteAlignment } = notice;
+    const {
+      title,
+      body,
+      noticeId,
+      quoteCitation,
+      quoteIndicator,
+      quoteAlignment,
+    } = notice;
     const { displayName } = userAuth;
     const createdAt = new Date();
 
@@ -62,9 +69,8 @@ export const createNewNotice = async (notice, userAuth) => {
         body,
         quoteCitation,
         quoteIndicator,
-        quoteAlignment
+        quoteAlignment,
       });
-
     } catch (error) {
       console.log("error creating new post", error.message);
     }
@@ -74,12 +80,20 @@ export const createNewNotice = async (notice, userAuth) => {
 };
 
 //This function reads all notices from the firestore database
-export const readAllNotices = async () => {
+// and returns a reference to the notices collection
+export const readAllNotices = () => {
   const noticeBoardRef = firestore.collection("notices");
+  let notices = [];
 
-  const noticeBoardSnapshot = await noticeBoardRef.get();
-  
-  return noticeBoardSnapshot;
+  noticeBoardRef.onSnapshot((querySnapshot) => {
+    querySnapshot.forEach((snapShot) => {
+      notices.push(snapShot.data());
+    });
+
+    console.log("Data on notice collection:", notices);
+  });
+
+  return notices;
 };
 
 firebase.initializeApp(config);

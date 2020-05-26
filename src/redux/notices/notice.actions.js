@@ -11,3 +11,7 @@ export const toggleReadNotice = Id => {
 export const addNotice = notice => {
   return {type: NoticeActionTypes.ADD_NOTICE, payload: notice};
 }
+
+export const loadNoticeBoard = notices => {
+  return {type: NoticeActionTypes.LOAD_NOTICE_BOARD, payload: notices};
+}

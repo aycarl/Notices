@@ -5,6 +5,9 @@ const noticeReducer = (state = [], action) => {
     case NoticeActionTypes.ADD_NOTICE:
       return [...state, action.payload];
 
+    case NoticeActionTypes.LOAD_NOTICE_BOARD:
+      return [...state, action.payload]
+
     default:
       return state;
   }
