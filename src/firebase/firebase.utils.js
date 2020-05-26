@@ -58,7 +58,7 @@ export const createNewNotice = async (notice, userAuth) => {
       quoteAlignment,
     } = notice;
     const { displayName } = userAuth;
-    const createdAt = new Date();
+    const createdAt = new Date().toDateString();
 
     try {
       await noticeRef.set({
@@ -85,7 +85,7 @@ export const readAllNotices = () => {
   const noticeBoardRef = firestore.collection("notices");
   let notices = [];
 
-  noticeBoardRef.onSnapshot((querySnapshot) => {
+  noticeBoardRef.get().then((querySnapshot) => {
     querySnapshot.forEach((snapShot) => {
       notices.push(snapShot.data());
     });
