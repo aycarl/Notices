@@ -11,10 +11,16 @@ class CardContainer extends Component {
 
   componentDidMount() {
     const { loadNoticeBoard } = this.props;
+    console.log("rendering CardContainer", loadNoticeBoard);
 
     const noticeFirestoreList = readAllNotices();
 
     loadNoticeBoard(noticeFirestoreList);
+  }
+
+  componentWillUnmount() {
+    const { loadNoticeBoard } = this.props;
+    loadNoticeBoard([]);
   }
 
   render() {
@@ -25,16 +31,16 @@ class CardContainer extends Component {
       <CardColumns>
         {notices.map(
           ({
+            noticeId,
             quoteIndicator,
             createdAt,
-            noticeId,
             quoteAlignment,
             quoteCitation,
             body,
-            title,
+            title
           }) => (
             <NoticeCard
-              key={noticeId}
+              key={noticeId} 
               isQuote={quoteIndicator}
               title={title}
               body={body}

@@ -89,8 +89,6 @@ export const readAllNotices = () => {
     querySnapshot.forEach((snapShot) => {
       notices.push(snapShot.data());
     });
-
-    console.log("Data on notice collection:", notices);
   });
 
   return notices;
