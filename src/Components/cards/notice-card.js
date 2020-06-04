@@ -2,12 +2,12 @@ import React from "react";
 
 import { Card } from "react-bootstrap";
 
-const NoticeCard = ({ key, isQuote, alignment, citation, title, body, timestamp }) => {
+const NoticeCard = ({ isQuote, alignment, citation, title, body, timestamp }) => {
   console.log("renders!!!");
   return (
-    <div key={key}>
+    <div>
       {isQuote ? (
-        <Card className={alignment} key={`${key}-Q`}>
+        <Card className={alignment} >
           <blockquote className="blockquote mb-0 card-body">
             <p>{body}</p>
             <footer className="blockquote-footer">
@@ -18,7 +18,7 @@ const NoticeCard = ({ key, isQuote, alignment, citation, title, body, timestamp 
           </blockquote>
         </Card>
       ) : (
-        <Card bg="light" text="dark" key={`${key}-R`}>
+        <Card bg="light" text="dark">
           <Card.Body>
             <Card.Title>{title}</Card.Title>
             <Card.Text>

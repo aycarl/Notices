@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 import { Container, Button } from "react-bootstrap";
 
@@ -8,7 +8,7 @@ import NewNoticeModal from "../Components/new-notice-modal/new-notice-modal";
 
 import "../Assets/stylesheets/pages.modules.scss";
 
-const HomePage = ({ currentUser }) => {
+const HomePage = ({ currentUser, notices }) => {
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
@@ -24,16 +24,24 @@ const HomePage = ({ currentUser }) => {
           Add Notice
         </Button>
       ) : (
-        <div></div>
+        null
       )}
-      <NewNoticeModal show={modalShow} onHide={() => setModalShow(false)}  currentUser={currentUser}/>
-      <CardContainer />
+      <CardContainer notices={notices} />
+      <NewNoticeModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        currentUser={currentUser}
+      />
     </Container>
   );
 };
 
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
-})
+const mapStateToProps = ({
+  user: { currentUser },
+  noticeBoard: { notices },
+}) => ({
+  currentUser,
+  notices,
+});
 
 export default connect(mapStateToProps)(HomePage);
