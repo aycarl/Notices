@@ -81,18 +81,18 @@ export const createNewNotice = async (notice, userAuth) => {
 
 //This function reads all notices from the firestore database
 // and returns a reference to the notices collection
-export const readAllNotices = () => {
-  const noticeBoardRef = firestore.collection("notices");
-  let notices = [];
+// export const readAllNotices = () => {
+//   const noticeBoardRef = firestore.collection("notices");
+//   let notices = [];
 
-  noticeBoardRef.get().then((querySnapshot) => {
-    querySnapshot.forEach((snapShot) => {
-      notices.push(snapShot.data());
-    });
-  });
+//   noticeBoardRef.get().then((querySnapshot) => {
+//     querySnapshot.forEach((snapShot) => {
+//       notices.push(snapShot.data());
+//     });
+//   });
 
-  return notices;
-};
+//   return notices;
+// };
 
 firebase.initializeApp(config);
 

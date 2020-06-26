@@ -9,15 +9,15 @@ const noticeReducer = (state = INITIAL_STATE, action) => {
     case NoticeActionTypes.ADD_NOTICE:
       return Object.assign({}, state, {
         notices: [
-          ...state.notices,
-          action.payload
+          action.payload,
+          ...state.notices
         ]
       });
 
     case NoticeActionTypes.LOAD_NOTICE_BOARD:
       return {
         ...state,
-        notices: Object.assign(...state.notices, action.payload)
+        notices: [action.payload, ...state.notices ]
       }
 
     default:

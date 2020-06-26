@@ -17,8 +17,8 @@ const CardContainer = ({ notices }) => {
           body,
           title,
         }) => (
-          <NoticeCard
-            key={noticeId}
+          <NoticeCard key={noticeId}
+            id={noticeId}
             isQuote={quoteIndicator}
             title={title}
             body={body}
