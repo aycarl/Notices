@@ -19,20 +19,23 @@ class HomePage extends Component {
     };
   }
 
-  componentDidMount() {
-    const { loadNoticeBoard } = this.props;
-    const noticeBoardRef = firestore.collection("notices");
-    let notices = [];
+  // unsubscribeSnapshotFromComponent = null;
 
-    noticeBoardRef.get().then((querySnapshot) => {
-      querySnapshot.forEach((snapShot) => {
-        notices.push(snapShot.data());
-      });
-    });
+  // componentDidMount() {
+  //   const { loadNoticeBoard } = this.props;
+  //   const noticeBoardRef = firestore.collection("notices");
 
-    loadNoticeBoard(notices);
-    console.log("Here: ", notices);
-  }
+  //   this.unsubscribeSnapshotFromComponent = noticeBoardRef.onSnapshot(
+  //     async (querySnapshot) => {
+  //       const notices = querySnapshot.docs.map((snapShot) => {
+  //         return snapShot.data()
+  //       });
+
+  //       loadNoticeBoard(notices);
+  //       console.log("Here: ", notices);
+  //     }
+  //   );
+  // }
   toggleModal = () => {
     const { modalShow } = this.state;
     this.setState({ modalShow: !modalShow });
@@ -74,8 +77,8 @@ const mapStateToProps = ({
   notices,
 });
 
-const matchDispatchToProps = (dispatch) => ({
-  loadNoticeBoard: (notices) => dispatch(loadNoticeBoard(notices)),
-});
+// const matchDispatchToProps = (dispatch) => ({
+//   loadNoticeBoard: (notices) => dispatch(loadNoticeBoard(notices)),
+// });
 
-export default connect(mapStateToProps, matchDispatchToProps)(HomePage);
+export default connect(mapStateToProps)(HomePage);

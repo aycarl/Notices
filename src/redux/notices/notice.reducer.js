@@ -17,11 +17,11 @@ const noticeReducer = (state = INITIAL_STATE, action) => {
     case NoticeActionTypes.LOAD_NOTICE_BOARD:
       return {
         ...state,
-        notices: [action.payload, ...state.notices ]
+        notices: action.payload
       }
 
     default:
-      return {...state};
+      return state;
   }
 };
 

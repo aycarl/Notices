@@ -14,16 +14,18 @@ import SignInAndSignUpPage from "./Pages/SigninAndSignup/SigninAndSignup";
 
 import Header from "./Components/Header";
 
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument, firestore } from "./firebase/firebase.utils";
 import { setCurrentUser } from "./redux/user/user.actions";
+import { loadNoticeBoard } from "./redux/notices/notice.actions";
 
 import "./App.css";
 
 class App extends React.Component {
   unsubscibeFromAuth = null;
+  unsubscribeSnapshotFromComponent = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser, loadNoticeBoard } = this.props;
 
     this.unsubscibeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
@@ -39,6 +41,19 @@ class App extends React.Component {
         setCurrentUser(userAuth);
       }
     });
+    
+    const noticeBoardRef = firestore.collection("notices");
+
+    this.unsubscribeSnapshotFromComponent = noticeBoardRef.onSnapshot(
+      async (querySnapshot) => {
+        const notices = querySnapshot.docs.map((snapShot) => {
+          return snapShot.data()
+        });
+
+        loadNoticeBoard(notices);
+        console.log("Here: ", notices);
+      }
+    );
   }
 
   componentWillUnmount() {
@@ -73,7 +88,8 @@ const mapStateToProps = ({ user: {currentUser} }) => ({
 });
 
 const matchDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user))
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  loadNoticeBoard: notices => dispatch(loadNoticeBoard(notices))
 });
 
 export default connect(mapStateToProps, matchDispatchToProps)(App);
