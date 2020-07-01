@@ -2,9 +2,8 @@
   height: 70px;
   width: 100vw;
   display: flex;
-  margin-bottom: 25px;
   align-items: center;
-  padding: 0.5rem 15rem;
+  padding: 0.5rem 14rem;
 }
 
 .header .logo-container {
@@ -13,8 +12,14 @@
   padding: 25px;
 }
 
+.brandName {
+  margin-left: 0;
+  margin-right: auto;
+}
+
 .options {
-  padding: 10px 15px;
+  margin-left: 10px;
+  padding: 10px 0px;
   cursor: pointer;
   height: 100%;
 }
