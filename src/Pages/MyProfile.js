@@ -1,13 +1,21 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const MyProfile = () => {
+import { Container } from 'react-bootstrap'
+
+const MyProfile = ({ currentUser }) => {
+  console.log(currentUser)
     return(
-      <div className="App">
-        <header className="App-header">
-          Profile
-        </header>
-      </div>
+      <Container fluid className="page">
+        <h1>Profile</h1>
+        <hr />
+        <p>No data yet</p>
+      </Container>
     )
 }
 
-export default MyProfile
+const mapStateToProps = ({ user: {currentUser} }) => ({
+  currentUser
+});
+
+export default connect(mapStateToProps)(MyProfile)
