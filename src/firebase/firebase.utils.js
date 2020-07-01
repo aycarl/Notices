@@ -13,6 +13,7 @@ const config = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
+//This function creates a new user profile in the firestore database for user authentication
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -39,17 +40,27 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+//This function creates a new notice post in the firstore database
 export const createNewNotice = async (notice, userAuth) => {
   if (!userAuth) return;
 
-  const noticeRef = firestore.doc(`notices/${notice.noticeId}`);
+  const noticeCollectionRef = firestore.collection('notices');
+
+  const noticeRef = noticeCollectionRef.doc();
 
   const noticeSnapShot = await noticeRef.get();
 
   if (!noticeSnapShot.exists) {
-    const { title, body, noticeId } = notice;
+    const {
+      title,
+      body,
+      noticeId,
+      quoteCitation,
+      quoteIndicator,
+      quoteAlignment,
+    } = notice;
     const { displayName } = userAuth;
-    const createdAt = new Date();
+    const createdAt = new Date().toDateString();
 
     try {
       await noticeRef.set({
@@ -58,9 +69,10 @@ export const createNewNotice = async (notice, userAuth) => {
         noticeId,
         title,
         body,
+        quoteCitation,
+        quoteIndicator,
+        quoteAlignment,
       });
-
-      console.log("New Notice created!", noticeRef);
     } catch (error) {
       console.log("error creating new post", error.message);
     }
@@ -68,6 +80,21 @@ export const createNewNotice = async (notice, userAuth) => {
 
   return noticeRef;
 };
+
+//This function reads all notices from the firestore database
+// and returns a reference to the notices collection
+// export const readAllNotices = () => {
+//   const noticeBoardRef = firestore.collection("notices");
+//   let notices = [];
+
+//   noticeBoardRef.get().then((querySnapshot) => {
+//     querySnapshot.forEach((snapShot) => {
+//       notices.push(snapShot.data());
+//     });
+//   });
+
+//   return notices;
+// };
 
 firebase.initializeApp(config);
 

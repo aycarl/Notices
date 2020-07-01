@@ -1,34 +1,59 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { Container, Button } from "react-bootstrap";
 
 import CardContainer from "../Components/cards/card-container";
-import NewNoticeModal from "../Components/new-notice/new-notice-modal";
+import NewNoticeModal from "../Components/new-notice-modal/new-notice-modal";
 
 import "../Assets/stylesheets/pages.modules.scss";
 
-const HomePage = (props) => {
-  const [modalShow, setModalShow] = React.useState(false);
+class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalShow: false,
+    };
+  }
+  toggleModal = () => {
+    const { modalShow } = this.state;
+    this.setState({ modalShow: !modalShow });
+  };
 
-  return (
-    <Container fluid className="page">
-      {props.currentUser ? (
-        <Button
-          className="addNoticeBtn"
-          variant="primary"
-          size="lg"
-          block
-          onClick={() => setModalShow(true)}
-        >
-          Add Notice
-        </Button>
-      ) : (
-        <div></div>
-      )}
-      <NewNoticeModal show={modalShow} onHide={() => setModalShow(false)}  currentUser={props.currentUser}/>
-      <CardContainer />
-    </Container>
-  );
-};
+  render() {
+    const { currentUser, notices } = this.props;
+    const { modalShow } = this.state;
 
-export default HomePage;
+    return (
+      <Container fluid className="page">
+        {currentUser ? (
+          <Button
+            className="addNoticeBtn"
+            variant="primary"
+            size="lg"
+            block
+            onClick={this.toggleModal}
+          >
+            Add Notice
+          </Button>
+        ) : null}
+        <NewNoticeModal
+          show={modalShow}
+          onHide={this.toggleModal}
+          currentUser={currentUser}
+        />
+        <CardContainer notices={notices} />
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = ({
+  user: { currentUser },
+  noticeBoard: { notices },
+}) => ({
+  currentUser,
+  notices,
+});
+
+export default connect(mapStateToProps)(HomePage);
