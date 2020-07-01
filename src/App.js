@@ -37,9 +37,7 @@ class App extends React.Component {
             ...snapShot.data(),
           })
         );
-      } else {
-        setCurrentUser(userAuth);
-      }
+      } 
     });
     
     const noticeBoardRef = firestore.collection("notices");
