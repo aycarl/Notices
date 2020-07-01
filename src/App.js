@@ -51,13 +51,13 @@ class App extends React.Component {
         });
 
         loadNoticeBoard(notices);
-        console.log("Here: ", notices);
       }
     );
   }
 
   componentWillUnmount() {
     this.unsubscibeFromAuth();
+    this.unsubscribeSnapshotFromComponent();
   }
 
   render() {

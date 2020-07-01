@@ -3,7 +3,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 
 const NoticeCard = ({ id, isQuote, alignment, citation, title, body, timestamp }) => {
-  console.log("renders!!!");
+  
   return (
     <div>
       {isQuote ? (

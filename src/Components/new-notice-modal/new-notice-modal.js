@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+//import { connect } from "react-redux";
 
 import { Modal, Button, Form, Col } from "react-bootstrap";
 
 import { createNewNotice } from "../../firebase/firebase.utils";
-import { addNotice } from "./../../redux/notices/notice.actions";
+// import { addNotice } from "./../../redux/notices/notice.actions";
 
 import "./new-notice-modal.styles.scss";
 
@@ -26,18 +26,18 @@ const NewNoticeModal = ({ currentUser, addNotice, ...props }) => {
       body: noticeBody,
       quoteCitation: noticeQuoteCitation,
       quoteIndicator: toggleDisabled,
-      quoteAlignment: noticeQuoteAlignment
+      quoteAlignment: noticeQuoteAlignment,
     };
 
     try {
-      const noticeRef = await createNewNotice(notice, currentUser);
+      await createNewNotice(notice, currentUser);
 
-      noticeRef.onSnapshot((snapShot) =>
-        addNotice({
-          id: snapShot.id,
-          ...snapShot.data()
-        })
-      );
+      // noticeRef.onSnapshot((snapShot) =>
+      //   addNotice({
+      //     id: snapShot.id,
+      //     ...snapShot.data()
+      //   })
+      // );
 
     } catch (error) {
       console.log("error message", error.message);
@@ -46,6 +46,7 @@ const NewNoticeModal = ({ currentUser, addNotice, ...props }) => {
     console.log("This was typed " + noticeTitle + " " + noticeBody);
     setNoticeBody("");
     setNoticeTitle("");
+    setNoticeQuoteAlignment("");
   };
 
   const handleChange = (event) => {
@@ -112,11 +113,15 @@ const NewNoticeModal = ({ currentUser, addNotice, ...props }) => {
             </Form.Group>
             <Form.Group as={Col} controlId="formQuoteAlignment">
               <Form.Label>Quote Text Alignment</Form.Label>
-              <Form.Control as="select" disabled={!toggleDisabled} value={noticeQuoteAlignment}
-                onChange={(e) => setNoticeQuoteAlignment(e.target.value)}>
-                <option value="text-right" >Right Align</option>
-                <option value="text-left" >Left Align</option>
-                <option value="text-center" >Center Align</option>
+              <Form.Control
+                as="select"
+                disabled={!toggleDisabled}
+                value={noticeQuoteAlignment}
+                onChange={(e) => setNoticeQuoteAlignment(e.target.value)}
+              >
+                <option value="text-right">Right Align</option>
+                <option value="text-left">Left Align</option>
+                <option value="text-center">Center Align</option>
               </Form.Control>
             </Form.Group>
           </Form.Row>
@@ -138,8 +143,8 @@ const NewNoticeModal = ({ currentUser, addNotice, ...props }) => {
   );
 };
 
-const matchDispatchToProps = dispatch => ({
-  addNotice: (notice) => dispatch(addNotice(notice))
-});
+// const matchDispatchToProps = dispatch => ({
+//   addNotice: (notice) => dispatch(addNotice(notice))
+// });
 
-export default connect(null, matchDispatchToProps)(NewNoticeModal);
+export default NewNoticeModal;

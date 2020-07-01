@@ -44,7 +44,9 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 export const createNewNotice = async (notice, userAuth) => {
   if (!userAuth) return;
 
-  const noticeRef = firestore.doc(`notices/${notice.noticeId}`);
+  const noticeCollectionRef = firestore.collection('notices');
+
+  const noticeRef = noticeCollectionRef.doc();
 
   const noticeSnapShot = await noticeRef.get();
 
