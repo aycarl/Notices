@@ -11,7 +11,7 @@ const Header = ({ currentUser }) => {
   return (
     <Navbar bg="light">
       <Nav className={`${styles.header} justify-content-end`} activeKey="/">
-        <Navbar.Brand className={styles.brandName} href="/">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand className={styles.brandName} href="/">Notices</Navbar.Brand>
         <Nav.Item className={styles.options}>
           <Nav.Link href="/">Home</Nav.Link>
         </Nav.Item>
