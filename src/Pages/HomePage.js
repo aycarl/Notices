@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import CardContainer from "../Components/cards/card-container";
 import NewNoticeModal from "../Components/new-notice-modal/new-notice-modal";
+import CustomButton from "./../Components/custom-button/custom-button";
 
 import "../Assets/stylesheets/pages.modules.scss";
 
@@ -27,15 +28,14 @@ class HomePage extends Component {
     return (
       <Container fluid className="page">
         {currentUser ? (
-          <Button
+          <CustomButton
             className="addNoticeBtn"
-            variant="primary"
             size="lg"
             block
             onClick={this.toggleModal}
           >
             Add Notice
-          </Button>
+          </CustomButton>
         ) : null}
         <NewNoticeModal
           show={modalShow}
