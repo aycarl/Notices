@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+
+import { selectAllNotices } from "./../redux/notices/notice.selectors";
+import { selectCurrentUser } from "./../redux/user/user.selectors";
 
 import { Container } from "react-bootstrap";
 
@@ -48,12 +52,9 @@ class HomePage extends Component {
   }
 }
 
-const mapStateToProps = ({
-  user: { currentUser },
-  noticeBoard: { notices },
-}) => ({
-  currentUser,
-  notices,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  notices: selectAllNotices
 });
 
 export default connect(mapStateToProps)(HomePage);
