@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import HomePage from "./Pages/HomePage";
 import About from "./Pages/About";
@@ -17,6 +18,8 @@ import Header from "./Components/Header";
 import { auth, createUserProfileDocument, firestore } from "./firebase/firebase.utils";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { loadNoticeBoard } from "./redux/notices/notice.actions";
+
+import { selectCurrentUser } from "./redux/user/user.selectors";
 
 import "./App.css";
 
@@ -37,9 +40,8 @@ class App extends React.Component {
             ...snapShot.data(),
           })
         );
-      } else {
-        setCurrentUser(userAuth);
-      }
+      } 
+      setCurrentUser(userAuth);
     });
     
     const noticeBoardRef = firestore.collection("notices");
@@ -83,8 +85,8 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user: {currentUser} }) => ({
-  currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 });
 
 const matchDispatchToProps = (dispatch) => ({
