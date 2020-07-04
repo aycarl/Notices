@@ -2,24 +2,28 @@ import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import { selectCurrentUser } from "./../redux/user/user.selectors"
+import { selectCurrentUser } from "./../redux/user/user.selectors";
 
 import Nav from "react-bootstrap/Nav";
 
 import { auth } from "../firebase/firebase.utils";
 
 import styles from "./../Assets/stylesheets/header.module.scss";
+import { Link } from "react-router-dom";
 
 const Header = ({ currentUser }) => {
   return (
     <Nav className={`${styles.header} justify-content-end`} activeKey="/">
       <Nav.Item className={styles.options}>
-        <Nav.Link href="/">Home</Nav.Link>
+        <Nav.Link as={Link} to="/">
+          Home
+        </Nav.Link>
       </Nav.Item>
       {currentUser ? (
         <Nav.Item className={styles.options}>
           <Nav.Link
-            href={`/${currentUser.displayName}`}
+            as={Link}
+            to={`/${currentUser.displayName}`}
             eventKey="link-profile"
           >
             Your profile
@@ -27,7 +31,7 @@ const Header = ({ currentUser }) => {
         </Nav.Item>
       ) : (
         <Nav.Item className={styles.options}>
-          <Nav.Link href="/about" eventKey="link-about">
+          <Nav.Link as={Link} to="/about" eventKey="link-about">
             About
           </Nav.Link>
         </Nav.Item>
@@ -40,7 +44,7 @@ const Header = ({ currentUser }) => {
         </Nav.Item>
       ) : (
         <Nav.Item className={styles.options}>
-          <Nav.Link href="/signin" eventKey="link-sign-in">
+          <Nav.Link as={Link} to="/signin" eventKey="link-sign-in">
             Sign In
           </Nav.Link>
         </Nav.Item>
@@ -50,7 +54,7 @@ const Header = ({ currentUser }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
 });
 
 export default connect(mapStateToProps)(Header);
