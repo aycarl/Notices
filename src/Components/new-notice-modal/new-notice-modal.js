@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-//import { connect } from "react-redux";
 
 import { Modal, Button, Form, Col } from "react-bootstrap";
 
 import { createNewNotice } from "../../firebase/firebase.utils";
-// import { addNotice } from "./../../redux/notices/notice.actions";
 
 import "./new-notice-modal.styles.scss";
 
@@ -31,13 +29,6 @@ const NewNoticeModal = ({ currentUser, addNotice, ...props }) => {
 
     try {
       await createNewNotice(notice, currentUser);
-
-      // noticeRef.onSnapshot((snapShot) =>
-      //   addNotice({
-      //     id: snapShot.id,
-      //     ...snapShot.data()
-      //   })
-      // );
 
     } catch (error) {
       console.log("error message", error.message);
@@ -143,9 +134,5 @@ const NewNoticeModal = ({ currentUser, addNotice, ...props }) => {
     </Modal>
   );
 };
-
-// const matchDispatchToProps = dispatch => ({
-//   addNotice: (notice) => dispatch(addNotice(notice))
-// });
 
 export default NewNoticeModal;
