@@ -134,7 +134,8 @@ const NewNoticeModal = ({ currentUser, addNotice, ...props }) => {
           >
             Cancel
           </Button>
-          <Button className="submit-button" type="submit">
+          <Button className="submit-button" type="submit"
+            onClick={props.onHide}>
             Add
           </Button>
         </Modal.Footer>
